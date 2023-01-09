@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import javafx.application.Application;
@@ -54,20 +55,27 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
-                refresh();
+                checkForWall(0,1);
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
-                refresh();
+                checkForWall(0,-1);
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
-                refresh();
+                checkForWall(1,0);
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
-                refresh();
+                checkForWall(-1,0);
                 break;
+        }
+        refresh();
+    }
+
+    private void checkForWall(int x, int y) {
+        if (map.getPlayer().getCell().getType() == CellType.WALL){
+            map.getPlayer().move(x, y);
         }
     }
 

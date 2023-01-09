@@ -55,19 +55,15 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
-                checkForWall(0,1);
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
-                checkForWall(0,-1);
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
-                checkForWall(1,0);
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
-                checkForWall(-1,0);
                 break;
         }
         refresh();

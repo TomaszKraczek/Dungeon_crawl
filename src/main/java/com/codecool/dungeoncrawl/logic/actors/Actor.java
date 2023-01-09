@@ -13,10 +13,12 @@ public abstract class Actor implements Drawable {
     }
 
     public void move(int dx, int dy) {
+        System.out.println(cell.getNeighbor(dx, dy).getActor());
         Cell nextCell = cell.getNeighbor(dx, dy);
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+        System.out.println(cell.getItem());
     }
 
     public int getHealth() {

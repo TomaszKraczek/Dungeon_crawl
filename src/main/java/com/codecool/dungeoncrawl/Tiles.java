@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -28,6 +29,7 @@ public class Tiles {
         tileMap.put("floor", new Tile(2, 0));
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put("key", new Tile(17,23));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
@@ -35,4 +37,18 @@ public class Tiles {
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }
+
+//    public void (Cell cell, conetxt, int x, int y){
+//        if (cell.getActor() != null) {
+//            Tiles.drawTile(context, cell.getActor(), x, y);
+//            System.out.println(cell.getActor());
+//        }
+//        else if (cell.getItem() != null){
+//            Tiles.drawTile(context, cell.getItem(), x, y);
+//        }
+//        else {
+//            Tiles.drawTile(context, cell, x, y);
+//        }
+//    }
+//    }
 }

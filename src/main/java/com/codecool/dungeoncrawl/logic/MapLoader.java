@@ -24,33 +24,36 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
-                        case ' ':
+                        case ' ' -> {
                             cell.setType(CellType.EMPTY);
-                            break;
-                        case '#':
+                        }
+                        case '#' -> {
                             cell.setType(CellType.WALL);
-                            break;
-                        case '.':
+                        }
+                        case '.' -> {
                             cell.setType(CellType.FLOOR);
-                            break;
-                        case 's':
+                        }
+                        case 's' -> {
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
-                            break;
-                        case '@':
+                        }
+                        case '@' -> {
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
-                            break;
-                        case 'k':
+                        }
+                        case 'k' -> {
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
                             break;
-                        case '1':
+                        }
+                        case '1' -> {
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
                             break;
-                        default:
+                        }
+                        default -> {
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                        }
                     }
                 }
             }

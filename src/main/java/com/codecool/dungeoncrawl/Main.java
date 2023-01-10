@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
+import java.util.ArrayList;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -30,6 +31,7 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
 
+    ArrayList<Label> itemLabels = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -41,6 +43,10 @@ public class Main extends Application {
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
+
+        // TODO: sprawdź poprawność refresh kiedy podnosi z ziemi
+        refresh();
+
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
         ui.add(pickUpButton, 2, 400);
@@ -57,6 +63,13 @@ public class Main extends Application {
                 }
             }
         });
+
+
+        ui.add(new Label("-----------"), 0, 1);
+        ui.add(new Label("Items: "), 0, 2);
+        for (int i = 0; i<itemLabels.size(); i++) {
+            ui.add(itemLabels.get(i), 3, i + 2);
+        }
 
 
         BorderPane borderPane = new BorderPane();
@@ -99,6 +112,8 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-
+        for (Item item : map.getPlayer().getEquipment()) {
+            itemLabels.add(new Label(item.getName()));
+        }
     }
 }

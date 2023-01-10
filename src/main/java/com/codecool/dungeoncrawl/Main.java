@@ -6,14 +6,12 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -30,7 +28,7 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
-    Button closeButton = new Button("Pick up");
+    Button pickUpButton = new Button("Pick up");
 
 
     public static void main(String[] args) {
@@ -43,14 +41,20 @@ public class Main extends Application {
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
-
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(closeButton, 2, 0);
-        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+        ui.add(pickUpButton, 2, 400);
+        pickUpButton.setFocusTraversable(false);
+        pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
-                System.out.println("Hello World");
+                if(map.getPlayer().getCell().getItem() != null){
+                    map.getPlayer().setEquipment(map.getPlayer().getEquipment(), map.getPlayer().getCell().getItem().getTileName());
+                    System.out.println(map.getPlayer().getEquipment().get(0));
+//                    map.getPlayer().getCell()
+                }else{
+                    System.out.println("There is no item.");
+                }
             }
         });
 
@@ -70,7 +74,6 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        System.out.println("halo");
         switch (keyEvent.getCode()) {
             case UP -> map.getPlayer().move(0, -1);
             case DOWN -> map.getPlayer().move(0, 1);

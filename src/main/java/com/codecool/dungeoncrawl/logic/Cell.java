@@ -22,6 +22,10 @@ public class Cell implements Drawable {
         return type;
     }
 
+//    public void setTilename(Tiles tile){
+//        this.tile = tile;
+//    }
+
     public void setType(CellType type) {
         this.type = type;
     }

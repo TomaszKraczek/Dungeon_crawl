@@ -16,6 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -58,12 +62,29 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1, 0);
         }
+        moveMonsters();
         refresh();
     }
 
     private void checkForWall(int x, int y) {
         if (map.getPlayer().getCell().getType() == CellType.WALL){
             map.getPlayer().move(x, y);
+        }
+    }
+
+    private String getRandomDirection(){
+        List<String> directions = Arrays.asList("UP", "DOWN", "LEFT", "RIGHT");
+        Random random = new Random();
+        return directions.get(random.nextInt(directions.size()));
+    }
+
+    private void moveMonsters(){
+        String direction = getRandomDirection();
+        switch (direction) {
+            case "UP" -> map.getActor().move(0, -1);
+            case "DOWN" -> map.getActor().move(0, 1);
+            case "LEFT" -> map.getActor().move(-1, 0);
+            case "RIGHT" -> map.getActor().move(1, 0);
         }
     }
 

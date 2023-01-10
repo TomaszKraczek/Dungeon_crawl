@@ -13,16 +13,6 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public abstract int getAttackStrength();
-
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
-    }
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -40,13 +30,11 @@ public abstract class Actor implements Drawable {
         }
     }
 
+    // do walidacji na czym player stoi
+    //        System.out.println(cell.getNeighbor(dx, dy).getActor());
+    //        System.out.println(cell.getItem());
+
     public abstract void fight(Actor actor);
-
-
-        // do walidacji na czym player stoi
-        //        System.out.println(cell.getNeighbor(dx, dy).getActor());
-        //        System.out.println(cell.getItem());
-
 
     public int getHealth() {
         return health;
@@ -63,4 +51,16 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
+
+    public abstract int getAttackStrength();
+
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
 }

@@ -44,12 +44,10 @@ public class MapLoader {
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
-                            break;
                         }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
-                            break;
                         }
                         default -> {
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

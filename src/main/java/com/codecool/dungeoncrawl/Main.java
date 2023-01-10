@@ -50,12 +50,17 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
         ui.add(pickUpButton, 2, 400);
+
+
+        ui.add(new Label("-----------"), 0, 1);
+        ui.add(new Label("Items: "), 0, 2);
+
         pickUpButton.setFocusTraversable(false);
         pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
                 if(map.getPlayer().getCell().getItem() != null){
-                    map.getPlayer().setEquipment(map.getPlayer().getCell().getItem());
+                    map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
                     System.out.println(map.getPlayer().getEquipment().get(0).getTileName());
 //                    map.getPlayer().getCell()
                 }else{
@@ -63,10 +68,6 @@ public class Main extends Application {
                 }
             }
         });
-
-
-        ui.add(new Label("-----------"), 0, 1);
-        ui.add(new Label("Items: "), 0, 2);
         for (int i = 0; i<itemLabels.size(); i++) {
             ui.add(itemLabels.get(i), 3, i + 2);
         }

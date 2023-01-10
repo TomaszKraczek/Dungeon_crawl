@@ -39,11 +39,10 @@ public class MapLoader {
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
-                            map.getPlayer().testFillEq();
                         }
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);
-                            new Key(cell);
+                            new Key(cell, "Blue key");
                         }
                         default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

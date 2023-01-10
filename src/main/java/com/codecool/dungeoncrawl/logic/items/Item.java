@@ -7,18 +7,13 @@ public abstract class Item implements Drawable {
     private Cell cell;
     private String name;
 
-
-    public Item(String name){
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Item(Cell cell) {
+    public Item(Cell cell, String name) {
         this.cell = cell;
         this.cell.setItem(this);
+        this.name = name;
+    }
+    public String getName() {
+        return name;
     }
 
     public Cell getCell() {

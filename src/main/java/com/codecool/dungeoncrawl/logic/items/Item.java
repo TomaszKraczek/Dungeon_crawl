@@ -5,6 +5,16 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Item implements Drawable {
     private Cell cell;
+    private String name;
+
+
+    public Item(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public Item(Cell cell) {
         this.cell = cell;

@@ -3,6 +3,9 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Skeleton extends Actor {
+
+    private int attackStrength = 2;
+
     public Skeleton(Cell cell) {
         super(cell);
     }
@@ -10,5 +13,9 @@ public class Skeleton extends Actor {
     @Override
     public String getTileName() {
         return "skeleton";
+    }
+
+    public int getAttackStrength() {
+        return attackStrength;
     }
 }

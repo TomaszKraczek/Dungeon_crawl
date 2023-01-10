@@ -13,21 +13,40 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
+    public abstract int getAttackStrength();
+
+
     public void setHealth(int health) {
         this.health = health;
     }
 
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell != null && !(nextCell.getType() == CellType.WALL) && nextCell.getActor() == null) {
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
+        if (nextCell != null && !(nextCell.getType() == CellType.WALL)) {
+            if (nextCell.getActor() == null) {
+                cell.setActor(null);
+                nextCell.setActor(this);
+                cell = nextCell;
+            } else {
+                Actor skeleton = nextCell.getActor();
+                this.fight(skeleton);
+
+            }
+
         }
+    }
+
+    public abstract void fight(Actor actor);
+
+
         // do walidacji na czym player stoi
         //        System.out.println(cell.getNeighbor(dx, dy).getActor());
         //        System.out.println(cell.getItem());
-    }
+
 
     public int getHealth() {
         return health;

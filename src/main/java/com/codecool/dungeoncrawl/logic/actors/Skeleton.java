@@ -15,7 +15,12 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
+    @Override
     public int getAttackStrength() {
         return attackStrength;
+    }
+
+    @Override
+    public void fight(Actor actor) {
     }
 }

@@ -10,20 +10,28 @@ public class Player extends Actor {
         super(cell);
     }
 
+    @Override
+    public int getAttackStrength() {
+        return attackStrength;
+    }
+
     public String getTileName() {
         return "player";
     }
+    @Override
+    public void fight (Actor skeleton){
 
-    public void fight (Cell cell, Player player, Skeleton skeleton){
-
-        while (skeleton.getHealth()>0 && player.getHealth()>0) {
+        while (skeleton.getHealth()>0 && getHealth()>0) {
             if ((skeleton.getHealth() - attackStrength)<=0) {
+                skeleton.setHealth((skeleton.getHealth() - attackStrength));
+                this.getCell().setActor(null);
                 System.out.println("You win");
-                cell.setActor(player);
+                skeleton.getCell().setActor(this);
+                this.setCell(skeleton.getCell());
             }
             else {
                 skeleton.setHealth((skeleton.getHealth() - attackStrength));
-                player.setHealth(player.getHealth() - skeleton.getAttackStrength());
+                this.setHealth(getHealth() - skeleton.getAttackStrength());
             }
         }
     }

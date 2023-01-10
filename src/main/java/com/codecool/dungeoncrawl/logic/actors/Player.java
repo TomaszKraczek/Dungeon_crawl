@@ -1,16 +1,17 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.items.Item;
 
 import java.util.ArrayList;
 
 public class Player extends Actor {
-    private ArrayList<String> equipment = new ArrayList<>();
-    public void setEquipment(ArrayList<String> equipment, String item) {
+    private ArrayList<Item> equipment = new ArrayList<>();
+    public void setEquipment(Item item) {
         equipment.add(item);
     }
 
-    public ArrayList<String> getEquipment() {
+    public ArrayList<Item> getEquipment() {
         return equipment;
     }
 

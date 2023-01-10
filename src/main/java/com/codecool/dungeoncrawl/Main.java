@@ -49,8 +49,8 @@ public class Main extends Application {
 
             public void handle(ActionEvent event) {
                 if(map.getPlayer().getCell().getItem() != null){
-                    map.getPlayer().setEquipment(map.getPlayer().getEquipment(), map.getPlayer().getCell().getItem().getTileName());
-                    System.out.println(map.getPlayer().getEquipment().get(0));
+                    map.getPlayer().setEquipment(map.getPlayer().getCell().getItem());
+                    System.out.println(map.getPlayer().getEquipment().get(0).getTileName());
 //                    map.getPlayer().getCell()
                 }else{
                     System.out.println("There is no item.");

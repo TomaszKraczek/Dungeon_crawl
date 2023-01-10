@@ -16,7 +16,7 @@ public abstract class Actor implements Drawable {
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell != null && !(nextCell.getType() == CellType.WALL)) {
+        if (nextCell != null && canGoThrough(nextCell)) {
             if (nextCell.getActor() == null) {
                 cell.setActor(null);
                 nextCell.setActor(this);
@@ -24,10 +24,13 @@ public abstract class Actor implements Drawable {
             } else {
                 Actor skeleton = nextCell.getActor();
                 this.fight(skeleton);
-
             }
 
         }
+    }
+
+    protected boolean canGoThrough(Cell cell) {
+        return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR;
     }
 
     // do walidacji na czym player stoi

@@ -33,6 +33,12 @@ public class MapLoader {
                         case '.' -> {
                             cell.setType(CellType.FLOOR);
                         }
+                        case 'c' -> {
+                            cell.setType(CellType.CLOSED_DOOR);
+                        }
+                        case 'o' -> {
+                            cell.setType(CellType.OPENED_DOOR);
+                        }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);

@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.Key;
 
 import java.util.ArrayList;
 
@@ -56,5 +58,15 @@ public class Player extends Actor {
                 this.setHealth(getHealth() - skeleton.getAttackStrength());
             }
         }
+    }
+
+    @Override
+    public boolean canGoThrough(Cell cell) {
+        if (cell.getType() == CellType.CLOSED_DOOR &&
+                equipment.stream()
+                        .anyMatch(o -> (o instanceof Key))) {
+            cell.setType(CellType.OPENED_DOOR);
+            return true;
+        }  else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR;
     }
 }

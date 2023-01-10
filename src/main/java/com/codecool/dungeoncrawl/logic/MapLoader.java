@@ -47,7 +47,7 @@ public class MapLoader {
                         }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);
-                            new Sword(cell);
+                            new Sword(cell, "Two-handed");
                         }
                         default -> {
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

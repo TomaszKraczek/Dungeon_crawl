@@ -55,19 +55,15 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
-                checkForWall(0,1);
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
-                checkForWall(0,-1);
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
-                checkForWall(1,0);
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
-                checkForWall(-1,0);
                 break;
         }
         refresh();
@@ -85,16 +81,7 @@ public class Main extends Application {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-//                    System.out.println(cell.getActor());
-                }
-                    else if (cell.getItem() != null){
-                        Tiles.drawTile(context, cell.getItem(), x, y);
-                    }
-                else {
-                    Tiles.drawTile(context, cell, x, y);
-                }
+                Tiles.drawTile(context, cell, x, y);
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());

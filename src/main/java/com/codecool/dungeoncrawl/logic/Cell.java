@@ -38,12 +38,16 @@ public class Cell implements Drawable {
     public Item getItem(){ return item; }
 
     public Cell getNeighbor(int dx, int dy) {
+        if (y + dy < 0 || x + dx < 0 ||
+                y + dy >= gameMap.getHeight() || x + dx >= gameMap.getWidth()) {
+            return null;
+        }
         return gameMap.getCell(x + dx, y + dy);
     }
 
     @Override
     public String getTileName() {
-        return type.getTileName();
+        return actor != null ? actor.getTileName() : type.getTileName();
     }
 
     public int getX() {

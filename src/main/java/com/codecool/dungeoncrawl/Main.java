@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -127,12 +128,14 @@ public class Main extends Application {
     }
 
     private void moveMonsters(){
-        String direction = getRandomDirection();
-        switch (direction) {
-            case "UP" -> map.getActor().move(0, -1);
-            case "DOWN" -> map.getActor().move(0, 1);
-            case "LEFT" -> map.getActor().move(-1, 0);
-            case "RIGHT" -> map.getActor().move(1, 0);
+        for (Actor monster : map.getMonsters()) {
+            String direction = getRandomDirection();
+            switch (direction) {
+                case "UP" -> monster.move(0, -1);
+                case "DOWN" -> monster.move(0, 1);
+                case "LEFT" -> monster.move(-1, 0);
+                case "RIGHT" -> monster.move(1, 0);
+            }
         }
     }
 

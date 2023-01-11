@@ -73,6 +73,7 @@ public class MapLoader {
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);
                             map.setActor(new Spider(cell));
+                            map.addMonster(cell.getActor());
                         }
                         case 'H' -> {
                             cell.setType(CellType.FLOOR);

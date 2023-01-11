@@ -145,6 +145,8 @@ public class Main extends Application {
                 Tiles.drawTile(context, cell, x, y);
             }
         }
+        map.getPlayer().updatePlayerStats();
+
         healthLabel.setText("" + map.getPlayer().getHealth());
         armorLabel.setText("" + map.getPlayer().getArmorPoints());
         attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());

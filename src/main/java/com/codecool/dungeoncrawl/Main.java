@@ -154,12 +154,16 @@ public class Main extends Application {
     }
 
     private void refresh() {
+//        System.out.println(map.getPlayer().);
+        int playerXOffset = 10;
+        int playerYOffset = 10;
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
+                System.out.println(x + " " + y);
                 Cell cell = map.getCell(x, y);
-                Tiles.drawTile(context, cell, x, y);
+                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
             }
         }
         map.getPlayer().updatePlayerStats();
@@ -170,5 +174,6 @@ public class Main extends Application {
         playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
         expLabel.setText("" + map.getPlayer().getPlayerExp());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
+//        System.out.println(map.getPlayer().get);
     }
 }

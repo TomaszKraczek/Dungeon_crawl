@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class MapLoader {
     public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+        InputStream is = MapLoader.class.getResourceAsStream("/map1.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -36,8 +36,20 @@ public class MapLoader {
                         case 'c' -> {
                             cell.setType(CellType.CLOSED_DOOR);
                         }
-                        case 'o' -> {
-                            cell.setType(CellType.OPENED_DOOR);
+                        case 'l' -> {
+                            cell.setType(CellType.LEAFY_TREE);
+                        }
+                        case '^' -> {
+                            cell.setType(CellType.CONIFER);
+                        }
+                        case 'p' -> {
+                            cell.setType(CellType.PATH);
+                        }
+                        case 'f' -> {
+                            cell.setType(CellType.FORESTERS_LODGE);
+                        }
+                        case 'g' -> {
+                            cell.setType(CellType.GRASS);
                         }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);

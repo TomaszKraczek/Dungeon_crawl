@@ -6,27 +6,26 @@ import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Weapon.Weapon;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Player extends Actor {
-    private int attackStrength = 0;
-    private int armorPoints = 0;
-    private int experience = 0;
+    private int attackStrength;
+    private int armorPoints;
+    private int experience;
     private int playerLevel = 1;
     private ArrayList<Item> equipment = new ArrayList<>();
-    public void addItemToEq(Item item) {
-        equipment.add(item);
-    }
+
 
     public Player(Cell cell) {
         super(cell);
     }
 
+   public void addItemToEq(Item item) {
+        equipment.add(item);
+    }
+
     public ArrayList<String> getItemsNames(){
-        ArrayList<String> names = new ArrayList<>();
-        for (Item item : equipment) {
-            names.add(item.getName());
-        }
-        return names;
+        return equipment.stream().map(Item::getName).collect(Collectors.toCollection(ArrayList<String>::new));
     }
 
     @Override
@@ -40,28 +39,12 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
-    public ArrayList<Item> getEquipment(){
-        return equipment;
-    }
 
-    public void showItems(){
-        for (Item item : equipment) {
-            System.out.println(item.getName());
-        }
-    }
-
-    // TODO: usunąc bo to metoda testowa wypełniająca ekwipunek
-//    public void testFillEq(){
-//        equipment.add(new Weapon("Sword"));
-//        equipment.add(new Weapon("Bow"));
-//        equipment.add(new Weapon("Axe"));
-//        equipment.add(new Weapon("Halabard"));
-//    }
     @Override
     public void fight (Actor skeleton){
 
-        while (skeleton.getHealth()>0 && getHealth()>0) {
-            if ((skeleton.getHealth() - attackStrength)<=0) {
+        while (skeleton.getHealth() > 0 && getHealth() > 0) {
+            if ((skeleton.getHealth() - attackStrength) <= 0) {
                 skeleton.setHealth((skeleton.getHealth() - attackStrength));
                 this.getCell().setActor(null);
                 System.out.println("You win");
@@ -88,8 +71,6 @@ public class Player extends Actor {
     private boolean isKey(Item item){
         return "key".equals(item.getTileName());
     }
-
-
 
     public int getPlayerLvl() {
         return playerLevel;

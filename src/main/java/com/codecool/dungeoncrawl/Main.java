@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    InputStream is = MapLoader.class.getResourceAsStream("/map1.txt");
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -115,12 +115,6 @@ public class Main extends Application {
         refresh();
     }
 
-    private void checkForWall(int x, int y) {
-        if (map.getPlayer().getCell().getType() == CellType.WALL){
-            map.getPlayer().move(x, y);
-        }
-    }
-
     private String getRandomDirection(){
         List<String> directions = Arrays.asList("UP", "DOWN", "LEFT", "RIGHT");
         Random random = new Random();
@@ -141,7 +135,7 @@ public class Main extends Application {
 
     private void refresh() {
 //        System.out.println(map.getPlayer().);
-        int playerXOffset = 10;
+        int playerXOffset = 23;
         int playerYOffset = 10;
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

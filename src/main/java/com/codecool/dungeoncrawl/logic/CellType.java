@@ -11,7 +11,6 @@ public enum CellType {
     PATH("path"),
     FORESTERS_LODGE("forester's lodge"),
     GRASS("grass");
-//    ITEM("item");
 
     private final String tileName;
 

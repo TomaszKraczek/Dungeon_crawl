@@ -29,7 +29,7 @@ public class GameMap {
     }
 
     public void addMonster(Actor monster) {
-        monsters.add(actor);
+        monsters.add(monster);
     }
 
     public ArrayList<Actor> getMonsters() {
@@ -48,13 +48,6 @@ public class GameMap {
         return player;
     }
 
-    public Actor getActor(){
-        return actor;
-    }
-
-    public void setActor(Actor actor) {
-        this.actor = actor;
-    }
     public void setItem(Item item){
         this.item = item;
     }

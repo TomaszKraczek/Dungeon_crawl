@@ -2,16 +2,14 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Spider extends Actor{
+public class Spider extends Monster{
 
     public Spider(Cell cell) {
         super(cell);
     }
 
     @Override
-    public void fight(Actor actor) {
-
-    }
+    public void fight(Actor actor) {}
 
     @Override
     public int getAttackStrength() {

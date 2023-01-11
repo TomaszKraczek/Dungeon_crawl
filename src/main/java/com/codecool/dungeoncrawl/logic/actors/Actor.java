@@ -20,6 +20,7 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             cell = nextCell;
         }
+
         // do walidacji na czym player stoi
         //        System.out.println(cell.getNeighbor(dx, dy).getActor());
         //        System.out.println(cell.getItem());

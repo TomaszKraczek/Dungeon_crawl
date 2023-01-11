@@ -6,14 +6,15 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -30,8 +32,8 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
-
-    ArrayList<Label> itemLabels = new ArrayList<>();
+    private ListView<String> listView = new ListView<>();
+    private ObservableList<String> itemList = FXCollections.observableArrayList(map.getPlayer().getItemsNames());
 
     public static void main(String[] args) {
         launch(args);
@@ -44,34 +46,27 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        // TODO: sprawdź poprawność refresh kiedy podnosi z ziemi
-        refresh();
-
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(pickUpButton, 2, 400);
-
+        ui.add(pickUpButton, 0, 400);
 
         ui.add(new Label("-----------"), 0, 1);
         ui.add(new Label("Items: "), 0, 2);
 
-        pickUpButton.setFocusTraversable(false);
-        pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
+        listView.setPrefSize(150, 400);
+        listView.setItems(itemList);
+        listView.setFocusTraversable(false);
+        ui.add(listView, 0, 4);
 
-            public void handle(ActionEvent event) {
-                if(map.getPlayer().getCell().getItem() != null){
-                    map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
-                    System.out.println(map.getPlayer().getEquipment().get(0).getTileName());
-//                    map.getPlayer().getCell()
-                }else{
-                    System.out.println("There is no item.");
-                }
+        pickUpButton.setFocusTraversable(false);
+
+        pickUpButton.setOnAction(event -> {
+            if(map.getPlayer().getCell().getItem() != null){
+                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+            }else{
+                System.out.println("There is no item.");
             }
         });
-        for (int i = 0; i<itemLabels.size(); i++) {
-            ui.add(itemLabels.get(i), 3, i + 2);
-        }
-
 
         BorderPane borderPane = new BorderPane();
 
@@ -113,8 +108,6 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        for (Item item : map.getPlayer().getEquipment()) {
-            itemLabels.add(new Label(item.getName()));
-        }
+        listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
     }
 }

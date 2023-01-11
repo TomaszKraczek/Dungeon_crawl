@@ -11,6 +11,6 @@ public class Weapon extends Item{
 
     @Override
     public String getTileName() {
-        return null;
+        return this.getName();
     }
 }

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    InputStream is = MapLoader.class.getResourceAsStream("/map2.txt");
+    InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Player extends Actor {
     private int attackStrength = 5;
     private int armor = 0;
+    private int experience = 0;
+    private int playerLevel = 1;
     private ArrayList<Item> equipment = new ArrayList<>();
     public void addItemToEq(Item item) {
         equipment.add(item);
@@ -79,5 +81,13 @@ public class Player extends Actor {
             cell.setType(CellType.OPENED_DOOR);
             return true;
         }  else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR;
+    }
+
+    public int getPlayerLvl() {
+        return playerLevel;
+    }
+
+    public int getPlayerExp() {
+        return experience;
     }
 }

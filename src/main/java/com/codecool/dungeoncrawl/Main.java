@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,8 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -32,9 +29,9 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
-    private ListView<String> listView = new ListView<>();
-    private ObservableList<String> itemList = FXCollections.observableArrayList(map.getPlayer().getItemsNames());
 
+    private ObservableList<String> itemList;
+    private ListView<String> listView = new ListView<>();
     public static void main(String[] args) {
         launch(args);
     }

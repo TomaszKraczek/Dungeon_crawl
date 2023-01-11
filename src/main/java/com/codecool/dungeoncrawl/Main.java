@@ -48,35 +48,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Attack power: "), 0, 1);
-        ui.add(attackPowerLabel, 1, 1);
-        ui.add(new Label("Armor :"), 0, 2);
-        ui.add(armorLabel, 1, 2);
+        addLabels(ui);
 
-        ui.add(new Label("-----------"), 0, 3);
-        ui.add(new Label("Player level: "), 0, 4);
-        ui.add(playerLvlLabel, 1, 4);
-        ui.add(new Label("Player exp: "), 0, 5);
-        ui.add(expLabel, 1, 5);
-        ui.add(pickUpButton, 0, 400);
-
-
-        ui.add(new Label("-----------"), 0, 6);
-        ui.add(new Label("Items: "), 0, 7);
-        ui.add(listView, 0, 8);
-
-        listView.setPrefSize(150, 400);
-        listView.setItems(itemList);
-        listView.setFocusTraversable(false);
-
-        pickupButtonManage();
+        addPickupButton(ui);
 
         BorderPane borderPane = new BorderPane();
 
@@ -92,14 +70,84 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void pickupButtonManage() {
+    private void refresh() {
+        int playerXOffset = 10;
+        int playerYOffset = 10;
+
+        drawMap(playerXOffset, playerYOffset);
+
+        map.getPlayer().updatePlayerStats();
+
+        updateLabels();
+
+        ChangeMapIfDoorOpened();
+    }
+
+    private void updateLabels() {
+        healthLabel.setText("" + map.getPlayer().getHealth());
+        armorLabel.setText("" + map.getPlayer().getArmorPoints());
+        attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());
+        playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
+        expLabel.setText("" + map.getPlayer().getPlayerExp());
+        listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
+    }
+
+    private void drawMap(int playerXOffset, int playerYOffset) {
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                Cell cell = map.getCell(x, y);
+                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
+            }
+        }
+    }
+
+    private void ChangeMapIfDoorOpened() {
+        if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
+            MapLoader mapLoader = new MapLoader();
+            filename = "/map2.txt";
+            is = MapLoader.class.getResourceAsStream(filename);
+            map = mapLoader.loadMap(is);
+        }
+    }
+
+    private void addLabels(GridPane ui) {
+        addStatsLabels(ui);
+        addItemList(ui);
+    }
+
+    private void addItemList(GridPane ui) {
+        ui.add(new Label("Items: "), 0, 7);
+        ui.add(listView, 0, 8);
+        listView.setPrefSize(150, 400);
+        listView.setItems(itemList);
+        listView.setFocusTraversable(false);
+    }
+
+    private void addStatsLabels(GridPane ui) {
+        ui.add(new Label("Health: "), 0, 0);
+        ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Attack power: "), 0, 1);
+        ui.add(attackPowerLabel, 1, 1);
+        ui.add(new Label("Armor :"), 0, 2);
+        ui.add(armorLabel, 1, 2);
+        ui.add(new Label("-----------"), 0, 3);
+        ui.add(new Label("Player level: "), 0, 4);
+        ui.add(playerLvlLabel, 1, 4);
+        ui.add(new Label("Player exp: "), 0, 5);
+        ui.add(expLabel, 1, 5);
+        ui.add(new Label("-----------"), 0, 6);
+    }
+
+    private void addPickupButton(GridPane ui) {
+        ui.add(pickUpButton, 0, 400);
         pickUpButton.setFocusTraversable(false);
 
         pickUpButton.setOnAction(event -> {
             if(map.getPlayer().getCell().getItem() != null){
                 map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
                 map.getPlayer().getCell().setItem(null);
-
             }else{
                 System.out.println("There is no item.");
             }
@@ -115,12 +163,6 @@ public class Main extends Application {
         }
         moveMonsters();
         refresh();
-    }
-
-    private void checkForWall(int x, int y) {
-        if (map.getPlayer().getCell().getType() == CellType.WALL){
-            map.getPlayer().move(x, y);
-        }
     }
 
     private String getRandomDirection(){
@@ -141,34 +183,5 @@ public class Main extends Application {
         }
     }
 
-    private void refresh() {
-//        System.out.println(map.getPlayer().);
-        int playerXOffset = 10;
-        int playerYOffset = 10;
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
-            }
-        }
-        map.getPlayer().updatePlayerStats();
 
-        healthLabel.setText("" + map.getPlayer().getHealth());
-        armorLabel.setText("" + map.getPlayer().getArmorPoints());
-        attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());
-        playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
-        expLabel.setText("" + map.getPlayer().getPlayerExp());
-        listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
-        ChangeMapIfDoorOpened();
-    }
-
-    private void ChangeMapIfDoorOpened() {
-        if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
-            MapLoader mapLoader = new MapLoader();
-            is = MapLoader.class.getResourceAsStream("/map2.txt");
-            map = mapLoader.loadMap(is);
-        }
-    }
 }

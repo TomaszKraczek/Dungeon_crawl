@@ -73,11 +73,13 @@ public class MapLoader {
                         }
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);
-                            new Spider(cell);
+                            map.setActor(new Spider(cell));
+                            map.addMonster(cell.getActor());
                         }
                         case 'W' -> {
                             cell.setType(CellType.FLOOR);
-                            new Warrior(cell);
+                            map.setActor(new Warrior(cell));
+                            map.addMonster(cell.getActor());
                         }
                         case 'H' -> {
                             cell.setType(CellType.FLOOR);

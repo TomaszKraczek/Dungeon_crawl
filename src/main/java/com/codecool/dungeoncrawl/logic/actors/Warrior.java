@@ -9,15 +9,20 @@ public class Warrior extends Monster {
     }
 
     @Override
-    public String getTileName() {
-        return "warrior";
+    public void move() {
+        if (checkNeighborForItem(0,-1)){
+            move(-1,-1);
+        } else if (checkNeighborForItem(1,0)){
+            move(1,-1);
+        } else if (checkNeighborForItem(0,1)){
+            move(1,1);
+        } else if (checkNeighborForItem(-1,0)){
+            move(-1,1);
+        }
     }
 
     @Override
-    public void fight(Actor actor) {}
-
-    @Override
-    public int getAttackStrength() {
-        return 0;
+    public String getTileName() {
+        return "warrior";
     }
 }

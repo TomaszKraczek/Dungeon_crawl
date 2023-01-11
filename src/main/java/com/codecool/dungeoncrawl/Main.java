@@ -1,12 +1,9 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Spider;
-import com.codecool.dungeoncrawl.logic.actors.Warrior;
+import com.codecool.dungeoncrawl.logic.actors.Monster;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+
 
 public class Main extends Application {
     InputStream is = MapLoader.class.getResourceAsStream("/map1.txt");
@@ -113,49 +108,20 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1, 0);
         }
-        moveMonsters();
+        for (Monster monster : map.getMonsters()) {
+            monster.move();
+        }
         refresh();
     }
 
-    private String getRandomDirection(){
-        List<String> directions = Arrays.asList("UP", "DOWN", "LEFT", "RIGHT");
-        Random random = new Random();
-        return directions.get(random.nextInt(directions.size()));
-    }
-
-    private void moveMonsters(){
-        for (Actor monster : map.getMonsters()) {
-            if (monster instanceof Spider) {
-                String direction = getRandomDirection();
-                switch (direction) {
-                    case "UP" -> monster.move(0, -1);
-                    case "DOWN" -> monster.move(0, 1);
-                    case "LEFT" -> monster.move(-1, 0);
-                    case "RIGHT" -> monster.move(1, 0);
-                }
-            } else if (monster instanceof Warrior){
-                if (monster.checkNeighborForItem(0,-1)){
-                    monster.move(-1,-1);
-                } else if (monster.checkNeighborForItem(1,0)){
-                    monster.move(1,-1);
-                } else if (monster.checkNeighborForItem(0,1)){
-                    monster.move(1,1);
-                } else if (monster.checkNeighborForItem(-1,0)){
-                    monster.move(-1,1);
-                }
-            }
-        }
-    }
 
     private void refresh() {
-//        System.out.println(map.getPlayer().);
-        int playerXOffset = 23;
-        int playerYOffset = 10;
+        int playerXOffset = map.getWidth() / 2;
+        int playerYOffset = map.getHeight() / 2;
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                System.out.println(x + " " + y);
                 Cell cell = map.getCell(x, y);
                 Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
             }
@@ -168,6 +134,5 @@ public class Main extends Application {
         playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
         expLabel.setText("" + map.getPlayer().getPlayerExp());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
-//        System.out.println(map.getPlayer().get);
     }
 }

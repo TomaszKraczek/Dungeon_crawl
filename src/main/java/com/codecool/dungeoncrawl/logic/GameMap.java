@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class GameMap {
     private Player player;
 
     private Actor actor; // <- remove it
-    private ArrayList<Actor> monsters = new ArrayList<>(); // consider special Monster class???
+    private ArrayList<Monster> monsters = new ArrayList<>(); // consider special Monster class???
     // impl addMonster(), getMonsters()
     private Item item;
 
@@ -28,11 +29,11 @@ public class GameMap {
         }
     }
 
-    public void addMonster(Actor monster) {
+    public void addMonster(Monster monster) {
         monsters.add(monster);
     }
 
-    public ArrayList<Actor> getMonsters() {
+    public ArrayList<Monster> getMonsters() {
         return monsters;
     }
 

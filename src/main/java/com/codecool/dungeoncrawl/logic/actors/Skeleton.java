@@ -9,6 +9,10 @@ public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
         super(cell);
     }
+
+    @Override
+    public void move() {}
+
     @Override
     public String getTileName() {
         return "skeleton";
@@ -19,7 +23,4 @@ public class Skeleton extends Monster {
         return attackStrength;
     }
 
-    @Override
-    public void fight(Actor actor) {
-    }
 }

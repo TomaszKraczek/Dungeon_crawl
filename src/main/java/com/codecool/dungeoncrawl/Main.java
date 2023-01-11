@@ -4,38 +4,42 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    GameMap map = new MapLoader().loadMap();
+    InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label armorLabel = new Label();
+    Label attackPowerLabel = new Label();
+    Label expLabel = new Label();
+    Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
-
-    ArrayList<Label> itemLabels = new ArrayList<>();
-
+    ObservableList<String> itemList;
+    ListView<String> listView = new ListView<>();
     public static void main(String[] args) {
         launch(args);
     }
@@ -46,34 +50,30 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        // TODO: sprawdź poprawność refresh kiedy podnosi z ziemi
-        refresh();
-
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(pickUpButton, 2, 400);
+        ui.add(new Label("Attack power: "), 0, 1);
+        ui.add(attackPowerLabel, 1, 1);
+        ui.add(new Label("Armor :"), 0, 2);
+        ui.add(armorLabel, 1, 2);
+
+        ui.add(new Label("-----------"), 0, 3);
+        ui.add(new Label("Player level: "), 0, 4);
+        ui.add(playerLvlLabel, 1, 4);
+        ui.add(new Label("Player exp: "), 0, 5);
+        ui.add(expLabel, 1, 5);
+        ui.add(pickUpButton, 0, 400);
 
 
-        ui.add(new Label("-----------"), 0, 1);
-        ui.add(new Label("Items: "), 0, 2);
+        ui.add(new Label("-----------"), 0, 6);
+        ui.add(new Label("Items: "), 0, 7);
+        ui.add(listView, 0, 8);
 
-        pickUpButton.setFocusTraversable(false);
-        pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
+        listView.setPrefSize(150, 400);
+        listView.setItems(itemList);
+        listView.setFocusTraversable(false);
 
-            public void handle(ActionEvent event) {
-                if(map.getPlayer().getCell().getItem() != null){
-                    map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
-                    System.out.println(map.getPlayer().getEquipment().get(0).getTileName());
-//                    map.getPlayer().getCell()
-                }else{
-                    System.out.println("There is no item.");
-                }
-            }
-        });
-        for (int i = 0; i<itemLabels.size(); i++) {
-            ui.add(itemLabels.get(i), 3, i + 2);
-        }
-
+        pickupButtonManage();
 
         BorderPane borderPane = new BorderPane();
 
@@ -87,6 +87,20 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void pickupButtonManage() {
+        pickUpButton.setFocusTraversable(false);
+
+        pickUpButton.setOnAction(event -> {
+            if(map.getPlayer().getCell().getItem() != null){
+                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+                map.getPlayer().getCell().setItem(null);
+
+            }else{
+                System.out.println("There is no item.");
+            }
+        });
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -131,9 +145,13 @@ public class Main extends Application {
                 Tiles.drawTile(context, cell, x, y);
             }
         }
+        map.getPlayer().updatePlayerStats();
+
         healthLabel.setText("" + map.getPlayer().getHealth());
-        for (Item item : map.getPlayer().getEquipment()) {
-            itemLabels.add(new Label(item.getName()));
-        }
+        armorLabel.setText("" + map.getPlayer().getArmorPoints());
+        attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());
+        playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
+        expLabel.setText("" + map.getPlayer().getPlayerExp());
+        listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
     }
 }

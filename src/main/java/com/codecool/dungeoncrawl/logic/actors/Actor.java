@@ -24,11 +24,8 @@ public abstract class Actor implements Drawable {
                 Actor skeleton = nextCell.getActor();
                 this.fight(skeleton);
             }
-
         }
-
     }
-
 
     protected boolean canGoThrough(Cell cell) {
         return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR;
@@ -65,6 +62,11 @@ public abstract class Actor implements Drawable {
 
     public void setCell(Cell cell) {
         this.cell = cell;
+    }
+
+    public boolean checkNeighborForItem(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        return nextCell.getItem() != null;
     }
 
 }

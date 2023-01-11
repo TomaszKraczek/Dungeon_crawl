@@ -5,6 +5,8 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Spider;
+import com.codecool.dungeoncrawl.logic.actors.Warrior;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -173,12 +175,24 @@ public class Main extends Application {
 
     private void moveMonsters(){
         for (Actor monster : map.getMonsters()) {
-            String direction = getRandomDirection();
-            switch (direction) {
-                case "UP" -> monster.move(0, -1);
-                case "DOWN" -> monster.move(0, 1);
-                case "LEFT" -> monster.move(-1, 0);
-                case "RIGHT" -> monster.move(1, 0);
+            if (monster instanceof Spider) {
+                String direction = getRandomDirection();
+                switch (direction) {
+                    case "UP" -> monster.move(0, -1);
+                    case "DOWN" -> monster.move(0, 1);
+                    case "LEFT" -> monster.move(-1, 0);
+                    case "RIGHT" -> monster.move(1, 0);
+                }
+            } else if (monster instanceof Warrior){
+                if (monster.checkNeighborForItem(0,-1)){
+                    monster.move(-1,-1);
+                } else if (monster.checkNeighborForItem(1,0)){
+                    monster.move(1,-1);
+                } else if (monster.checkNeighborForItem(0,1)){
+                    monster.move(1,1);
+                } else if (monster.checkNeighborForItem(-1,0)){
+                    monster.move(-1,1);
+                }
             }
         }
     }

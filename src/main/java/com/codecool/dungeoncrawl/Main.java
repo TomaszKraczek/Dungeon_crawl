@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    InputStream is = MapLoader.class.getResourceAsStream("/map2.txt");
+    InputStream is = MapLoader.class.getResourceAsStream("/map1.txt");
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -137,12 +137,14 @@ public class Main extends Application {
     }
 
     private void refresh() {
+//        System.out.println(map.getPlayer().);
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
+                System.out.println(x + " " + y);
                 Cell cell = map.getCell(x, y);
-                Tiles.drawTile(context, cell, x, y);
+                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + 23, y  - map.getPlayer().getY() + 8);
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
@@ -151,5 +153,6 @@ public class Main extends Application {
         playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
         expLabel.setText("" + map.getPlayer().getPlayerExp());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
+//        System.out.println(map.getPlayer().get);
     }
 }

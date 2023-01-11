@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Actor {
-    private int attackStrength =5;
+    private int attackStrength = 5;
+    private int armor = 0;
+    private int experience = 0;
+    private int playerLevel = 1;
     private ArrayList<Item> equipment = new ArrayList<>();
     public void addItemToEq(Item item) {
         equipment.add(item);
@@ -28,6 +31,9 @@ public class Player extends Actor {
     @Override
     public int getAttackStrength() {
         return attackStrength;
+    }
+    public int getArmorPoints(){
+        return armor;
     }
 
     public String getTileName() {
@@ -83,4 +89,12 @@ public class Player extends Actor {
     }
 
 
+
+    public int getPlayerLvl() {
+        return playerLevel;
+    }
+
+    public int getPlayerExp() {
+        return experience;
+    }
 }

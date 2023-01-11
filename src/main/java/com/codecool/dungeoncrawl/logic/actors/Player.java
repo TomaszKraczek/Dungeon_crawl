@@ -6,16 +6,12 @@ import com.codecool.dungeoncrawl.logic.items.Key;
 import java.util.ArrayList;
 
 public class Player extends Actor {
-
+    private int attackStrength = 5;
+    private int armor = 0;
     private ArrayList<Item> equipment = new ArrayList<>();
     public void addItemToEq(Item item) {
         equipment.add(item);
     }
-
-
-
-
-    private int attackStrength =5;
 
     public Player(Cell cell) {
         super(cell);
@@ -32,6 +28,9 @@ public class Player extends Actor {
     @Override
     public int getAttackStrength() {
         return attackStrength;
+    }
+    public int getArmorPoints(){
+        return armor;
     }
 
     public String getTileName() {

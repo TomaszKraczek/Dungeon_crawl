@@ -30,10 +30,11 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label armorLabel = new Label();
+    Label attackPowerLabel = new Label();
     Button pickUpButton = new Button("Pick up");
-
-    private ObservableList<String> itemList;
-    private ListView<String> listView = new ListView<>();
+    ObservableList<String> itemList;
+    ListView<String> listView = new ListView<>();
     public static void main(String[] args) {
         launch(args);
     }
@@ -46,11 +47,15 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Attack power: "), 0, 1);
+        ui.add(attackPowerLabel, 1, 1);
+        ui.add(new Label("Armor :"), 0, 2);
+        ui.add(armorLabel, 1, 2);
         ui.add(pickUpButton, 0, 400);
 
 
-        ui.add(new Label("-----------"), 0, 1);
-        ui.add(new Label("Items: "), 0, 2);
+        ui.add(new Label("-----------"), 0, 3);
+        ui.add(new Label("Items: "), 0, 4);
 
         listView.setPrefSize(150, 400);
         listView.setItems(itemList);
@@ -124,6 +129,8 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        armorLabel.setText("" + map.getPlayer().getArmorPoints());
+        attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
     }
 }

@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    String filename = "/map.txt";
+    InputStream is = MapLoader.class.getResourceAsStream(filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -47,6 +48,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -147,7 +149,6 @@ public class Main extends Application {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                System.out.println(x + " " + y);
                 Cell cell = map.getCell(x, y);
                 Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
             }
@@ -160,6 +161,14 @@ public class Main extends Application {
         playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
         expLabel.setText("" + map.getPlayer().getPlayerExp());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
-//        System.out.println(map.getPlayer().get);
+        ChangeMapIfDoorOpened();
+    }
+
+    private void ChangeMapIfDoorOpened() {
+        if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
+            MapLoader mapLoader = new MapLoader();
+            is = MapLoader.class.getResourceAsStream("/map2.txt");
+            map = mapLoader.loadMap(is);
+        }
     }
 }

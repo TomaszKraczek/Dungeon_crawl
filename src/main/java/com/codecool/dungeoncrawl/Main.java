@@ -19,12 +19,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    GameMap map = new MapLoader().loadMap();
+    InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);

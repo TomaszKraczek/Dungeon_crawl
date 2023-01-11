@@ -71,11 +71,11 @@ public class MapLoader {
                         }
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setActor(new Spider(cell));
+                            new Spider(cell);
                         }
                         case 'W' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setActor(new Warrior(cell));
+                            new Warrior(cell);
                         }
                         default -> {
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

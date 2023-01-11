@@ -113,13 +113,13 @@ public class Main extends Application {
     }
 
     private void moveMonsters(){
-        String direction = getRandomDirection();
-        switch (direction) {
-            case "UP" -> map.getActor().move(0, -1);
-            case "DOWN" -> map.getActor().move(0, 1);
-            case "LEFT" -> map.getActor().move(-1, 0);
-            case "RIGHT" -> map.getActor().move(1, 0);
-        }
+//        String direction = getRandomDirection();
+//        switch (direction) {
+//            case "UP" -> map.getActor().move(0, -1);
+//            case "DOWN" -> map.getActor().move(0, 1);
+//            case "LEFT" -> map.getActor().move(-1, 0);
+//            case "RIGHT" -> map.getActor().move(1, 0);
+//        }
     }
 
     private void refresh() {

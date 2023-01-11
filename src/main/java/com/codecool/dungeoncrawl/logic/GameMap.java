@@ -35,13 +35,6 @@ public class GameMap {
         return player;
     }
 
-    public Actor getActor(){
-        return actor;
-    }
-
-    public void setActor(Actor actor) {
-        this.actor = actor;
-    }
 
     public int getWidth() {
         return width;

@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import java.util.ArrayList;
 
 public class GameMap {
     private int width;
@@ -11,7 +12,9 @@ public class GameMap {
 
     private Player player;
 
-    private Actor actor;
+    private Actor actor; // <- remove it
+    private ArrayList<Actor> monsters = new ArrayList<>(); // consider special Monster class???
+    // impl addMonster(), getMonsters()
     private Item item;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -23,6 +26,14 @@ public class GameMap {
                 cells[x][y] = new Cell(this, x, y, defaultCellType);
             }
         }
+    }
+
+    public void addMonster(Actor monster) {
+        monsters.add(actor);
+    }
+
+    public ArrayList<Actor> getMonsters() {
+        return monsters;
     }
 
     public Cell getCell(int x, int y) {

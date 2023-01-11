@@ -19,10 +19,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    GameMap map = new MapLoader().loadMap();
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -39,13 +41,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GridPane ui = new GridPane();
-
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(pickUpButton, 0, 400);
+        ui.add(pickUpButton, 2, 400);
+
 
         ui.add(new Label("-----------"), 0, 1);
         ui.add(new Label("Items: "), 0, 2);
@@ -86,12 +88,29 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1, 0);
         }
+        moveMonsters();
         refresh();
     }
 
     private void checkForWall(int x, int y) {
         if (map.getPlayer().getCell().getType() == CellType.WALL){
             map.getPlayer().move(x, y);
+        }
+    }
+
+    private String getRandomDirection(){
+        List<String> directions = Arrays.asList("UP", "DOWN", "LEFT", "RIGHT");
+        Random random = new Random();
+        return directions.get(random.nextInt(directions.size()));
+    }
+
+    private void moveMonsters(){
+        String direction = getRandomDirection();
+        switch (direction) {
+            case "UP" -> map.getActor().move(0, -1);
+            case "DOWN" -> map.getActor().move(0, 1);
+            case "LEFT" -> map.getActor().move(-1, 0);
+            case "RIGHT" -> map.getActor().move(1, 0);
         }
     }
 

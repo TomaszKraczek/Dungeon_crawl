@@ -74,6 +74,7 @@ public class MapLoader {
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);
                             map.setActor(new Spider(cell));
+                            map.addMonster(cell.getActor());
                         }
                         default -> {
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

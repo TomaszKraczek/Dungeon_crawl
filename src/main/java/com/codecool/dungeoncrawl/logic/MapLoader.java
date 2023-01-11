@@ -59,7 +59,9 @@ public class MapLoader {
                         }
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            if (map.getPlayer() == null) {
+                                map.setPlayer(new Player(cell));
+                            } // else - maybe warn, or something about 2nd player???
                         }
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);

@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.items.Item;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
@@ -67,7 +66,7 @@ public abstract class Actor implements Drawable {
 
     public boolean checkNeighborForItem(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        return nextCell.getItem() instanceof Item;
+        return nextCell.getItem() != null;
     }
 
 }

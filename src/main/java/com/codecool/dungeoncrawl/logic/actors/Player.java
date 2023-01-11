@@ -4,18 +4,14 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Player extends Actor {
-
+    private int attackStrength =5;
     private ArrayList<Item> equipment = new ArrayList<>();
     public void addItemToEq(Item item) {
         equipment.add(item);
     }
-
-
-
-
-    private int attackStrength =5;
 
     public Player(Cell cell) {
         super(cell);
@@ -76,9 +72,15 @@ public class Player extends Actor {
     public boolean canGoThrough(Cell cell) {
         if (cell.getType() == CellType.CLOSED_DOOR &&
                 equipment.stream()
-                        .anyMatch(o -> (o instanceof Key))) {
+                        .anyMatch(this::isKey)) {
             cell.setType(CellType.OPENED_DOOR);
             return true;
-        }  else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR;
+        } else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR;
     }
+
+    private boolean isKey(Item item){
+        return "key".equals(item.getTileName());
+    }
+
+
 }

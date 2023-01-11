@@ -57,15 +57,7 @@ public class Main extends Application {
         listView.setFocusTraversable(false);
         ui.add(listView, 0, 4);
 
-        pickUpButton.setFocusTraversable(false);
-
-        pickUpButton.setOnAction(event -> {
-            if(map.getPlayer().getCell().getItem() != null){
-                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
-            }else{
-                System.out.println("There is no item.");
-            }
-        });
+        pickupButtonManage();
 
         BorderPane borderPane = new BorderPane();
 
@@ -79,6 +71,20 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void pickupButtonManage() {
+        pickUpButton.setFocusTraversable(false);
+
+        pickUpButton.setOnAction(event -> {
+            if(map.getPlayer().getCell().getItem() != null){
+                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+                map.getPlayer().getCell().setItem(null);
+
+            }else{
+                System.out.println("There is no item.");
+            }
+        });
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {

@@ -46,7 +46,7 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(pickUpButton, 2, 400);
+        ui.add(pickUpButton, 0, 400);
 
 
         ui.add(new Label("-----------"), 0, 1);

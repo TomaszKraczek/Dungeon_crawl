@@ -33,10 +33,13 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label armorLabel = new Label();
+    Label attackPowerLabel = new Label();
+    Label expLabel = new Label();
+    Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
-
-    private ObservableList<String> itemList;
-    private ListView<String> listView = new ListView<>();
+    ObservableList<String> itemList;
+    ListView<String> listView = new ListView<>();
     public static void main(String[] args) {
         launch(args);
     }
@@ -49,26 +52,28 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Attack power: "), 0, 1);
+        ui.add(attackPowerLabel, 1, 1);
+        ui.add(new Label("Armor :"), 0, 2);
+        ui.add(armorLabel, 1, 2);
+
+        ui.add(new Label("-----------"), 0, 3);
+        ui.add(new Label("Player level: "), 0, 4);
+        ui.add(playerLvlLabel, 1, 4);
+        ui.add(new Label("Player exp: "), 0, 5);
+        ui.add(expLabel, 1, 5);
         ui.add(pickUpButton, 0, 400);
 
 
-        ui.add(new Label("-----------"), 0, 1);
-        ui.add(new Label("Items: "), 0, 2);
+        ui.add(new Label("-----------"), 0, 6);
+        ui.add(new Label("Items: "), 0, 7);
+        ui.add(listView, 0, 8);
 
         listView.setPrefSize(150, 400);
         listView.setItems(itemList);
         listView.setFocusTraversable(false);
-        ui.add(listView, 0, 4);
 
-        pickUpButton.setFocusTraversable(false);
-
-        pickUpButton.setOnAction(event -> {
-            if(map.getPlayer().getCell().getItem() != null){
-                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
-            }else{
-                System.out.println("There is no item.");
-            }
-        });
+        pickupButtonManage();
 
         BorderPane borderPane = new BorderPane();
 
@@ -82,6 +87,20 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void pickupButtonManage() {
+        pickUpButton.setFocusTraversable(false);
+
+        pickUpButton.setOnAction(event -> {
+            if(map.getPlayer().getCell().getItem() != null){
+                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+                map.getPlayer().getCell().setItem(null);
+
+            }else{
+                System.out.println("There is no item.");
+            }
+        });
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -127,6 +146,10 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        armorLabel.setText("" + map.getPlayer().getArmorPoints());
+        attackPowerLabel.setText("" + map.getPlayer().getAttackStrength());
+        playerLvlLabel.setText("" + map.getPlayer().getPlayerLvl());
+        expLabel.setText("" + map.getPlayer().getPlayerExp());
         listView.setItems(FXCollections.observableArrayList(map.getPlayer().getItemsNames()));
     }
 }

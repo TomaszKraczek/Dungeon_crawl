@@ -34,6 +34,24 @@ public class MapLoader {
                         case '.' -> {
                             cell.setType(CellType.FLOOR);
                         }
+                        case 'c' -> {
+                            cell.setType(CellType.CLOSED_DOOR);
+                        }
+                        case 'l' -> {
+                            cell.setType(CellType.LEAFY_TREE);
+                        }
+                        case '^' -> {
+                            cell.setType(CellType.CONIFER);
+                        }
+                        case 'p' -> {
+                            cell.setType(CellType.PATH);
+                        }
+                        case 'f' -> {
+                            cell.setType(CellType.FORESTERS_LODGE);
+                        }
+                        case 'g' -> {
+                            cell.setType(CellType.GRASS);
+                        }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
@@ -44,11 +62,11 @@ public class MapLoader {
                         }
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);
-                            new Key(cell);
+                            new Key(cell, "Blue key");
                         }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);
-                            new Sword(cell);
+                            new Sword(cell, "Two-handed");
                         }
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);

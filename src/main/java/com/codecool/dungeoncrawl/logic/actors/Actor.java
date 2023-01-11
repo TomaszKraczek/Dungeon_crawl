@@ -9,8 +9,6 @@ public abstract class Actor implements Drawable {
     private Cell cell;
     private int health = 10;
 
-    Item item;
-
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
@@ -27,11 +25,8 @@ public abstract class Actor implements Drawable {
                 Actor skeleton = nextCell.getActor();
                 this.fight(skeleton);
             }
-
         }
-
     }
-
 
     protected boolean canGoThrough(Cell cell) {
         return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR;

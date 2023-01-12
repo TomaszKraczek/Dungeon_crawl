@@ -16,8 +16,8 @@ public class Player extends Actor {
     private ArrayList<Item> equipment = new ArrayList<>();
 
 
-    public Player(Cell cell) {
-        super(cell);
+    public Player(Cell cell, int health) {
+        super(cell, health);
     }
 
    public void addItemToEq(Item item) {

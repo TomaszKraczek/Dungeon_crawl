@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Warrior;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
-import com.codecool.dungeoncrawl.logic.actors.Spider;
+import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.Armor.Helmet;
 import com.codecool.dungeoncrawl.logic.items.Key.Key;
 import com.codecool.dungeoncrawl.logic.items.Weapon.Sword;
@@ -61,7 +58,7 @@ public class MapLoader {
                         }
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            map.setPlayer(new Player(cell, PlayerDefaultStats.HEALTH.getDefaultValue()));
                         }
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);

@@ -87,6 +87,7 @@ public class MapLoader {
                 }
             }
         }
+        System.out.println(map.getMonsters());
         return map;
     }
 

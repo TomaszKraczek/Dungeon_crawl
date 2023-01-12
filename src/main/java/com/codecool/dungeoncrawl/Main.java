@@ -68,6 +68,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+
     private void refresh() {
         int playerXOffset = map.getWidth() / 2;
         int playerYOffset = map.getHeight() / 2;
@@ -141,15 +143,18 @@ public class Main extends Application {
     private void addPickupButton(GridPane ui) {
         ui.add(pickUpButton, 0, 400);
         pickUpButton.setFocusTraversable(false);
-
         pickUpButton.setOnAction(event -> {
-            if(map.getPlayer().getCell().getItem() != null){
-                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
-                map.getPlayer().getCell().setItem(null);
-            }else{
-                System.out.println("There is no item.");
-            }
+            pickUpItem();
         });
+    }
+
+    private void pickUpItem() {
+        if(map.getPlayer().getCell().getItem() != null){
+            map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+            map.getPlayer().getCell().setItem(null);
+        }else{
+            System.out.println("There is no item.");
+        }
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -158,6 +163,7 @@ public class Main extends Application {
             case DOWN -> map.getPlayer().move(0, 1);
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1, 0);
+            case SPACE -> pickUpItem();
         }
         for (Monster monster : map.getMonsters()) {
             monster.move();

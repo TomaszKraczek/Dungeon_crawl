@@ -5,7 +5,6 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
-import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -42,7 +41,7 @@ public class Main extends Application {
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
 
-    private static Stage pStage;
+    private static Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -65,16 +64,12 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
-        pStage = primaryStage;
+        stage = primaryStage;
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
-
-
-
-
     }
 
     private void refresh() {
@@ -184,30 +179,25 @@ public class Main extends Application {
     }
 
     private void gameOver(){
-        getAlertWindow("Game over", "You were killed by a monster!", "Do you want to try again?");
+        getAlertWindow("Game over", "You were killed by a monster!");
     }
 
     private void playerWins(){
-        getAlertWindow("Congratulations", "You won!", "Do you want to try again?");
+        getAlertWindow("Congratulations", "You won!");
     }
 
-    private void getAlertWindow(String title, String header, String content){
+    private void getAlertWindow(String title, String header){
         Alert alert = new Alert((Alert.AlertType.CONFIRMATION));
         alert.setTitle(title);
         alert.setHeaderText(header);
-        alert.setContentText(content);
-        Optional<ButtonType> tryAgain=alert.showAndWait();
-        ButtonType button = tryAgain.orElse(ButtonType.OK);
+        alert.setContentText("Do you want to try again?");
+        Optional<ButtonType> result =alert.showAndWait();
+        ButtonType button = result.orElse(ButtonType.OK);
         if(button==ButtonType.OK) {
-            pStage.close();
+            stage.close();
             Platform.runLater(()->new Main().start(new Stage()));
         } else{
             System.exit(0);
         }
     }
-
-
-
-
-
 }

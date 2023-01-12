@@ -5,16 +5,16 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.util.Optional;
 
 
 public class Main extends Application {
@@ -40,12 +41,15 @@ public class Main extends Application {
     Button pickUpButton = new Button("Pick up");
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
+
+    private static Stage pStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -61,12 +65,21 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
+        pStage = primaryStage;
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+
+
+
+
     }
+
+//    private void setPrimaryStage(Stage primaryStage) {
+//        Main.primaryStage = primaryStage;
+//    }
 
     private void refresh() {
         int playerXOffset = map.getWidth() / 2;
@@ -79,6 +92,11 @@ public class Main extends Application {
         updateLabels();
 
         ChangeMapIfDoorOpened();
+
+        if (map.getPlayer().isPlayerKilled()) {
+            gameOver();
+        }
+
     }
 
     private void updateLabels() {
@@ -164,4 +182,20 @@ public class Main extends Application {
         }
         refresh();
     }
+
+    public void gameOver(){
+        Alert alert = new Alert((Alert.AlertType.CONFIRMATION));
+        alert.setTitle("Game over");
+        alert.setHeaderText("You were killed by a monster!");
+        alert.setContentText("Do you want to try again?");
+        Optional<ButtonType> tryAgain=alert.showAndWait();
+        ButtonType button = tryAgain.orElse(ButtonType.OK);
+        if(button==ButtonType.OK) {
+            pStage.close();
+            Platform.runLater(()->new Main().start(new Stage()));
+        } else{
+            System.exit(0);
+        }
+    }
+
 }

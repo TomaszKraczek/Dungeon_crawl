@@ -26,4 +26,9 @@ public class Warrior extends Monster {
     public String getTileName() {
         return "warrior";
     }
+
+    @Override
+    public int getAttackStrength(){
+        return MonstersStats.WARRIOR.getAttackStrength();
+    }
 }

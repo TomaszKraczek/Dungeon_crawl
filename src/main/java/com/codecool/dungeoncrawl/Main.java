@@ -25,7 +25,7 @@ import java.io.InputStream;
 
 
 public class Main extends Application {
-    String filename = "/map1.txt";
+    String filename = "/map.txt";
     InputStream is = MapLoader.class.getResourceAsStream(filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
@@ -164,7 +164,4 @@ public class Main extends Application {
         }
         refresh();
     }
-
-
-
 }

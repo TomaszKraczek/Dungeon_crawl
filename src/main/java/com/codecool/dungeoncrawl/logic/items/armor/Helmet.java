@@ -1,7 +1,6 @@
-package com.codecool.dungeoncrawl.logic.items.Armor;
+package com.codecool.dungeoncrawl.logic.items.armor;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.items.Item;
 
 public class Helmet extends Armor {
     private int armorPoints;

@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.items.Armor.Armor;
+import com.codecool.dungeoncrawl.logic.items.armor.Armor;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Weapon.Weapon;
+import com.codecool.dungeoncrawl.logic.items.weapon.Weapon;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

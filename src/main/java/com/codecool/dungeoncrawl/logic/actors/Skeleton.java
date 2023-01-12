@@ -3,10 +3,9 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Skeleton extends Monster {
-     private int attackStrength = 2;
 
-    public Skeleton(Cell cell) {
-        super(cell);
+    public Skeleton(Cell cell, int health, int attackStrength) {
+        super(cell, health, attackStrength);
 
     }
 
@@ -19,8 +18,8 @@ public class Skeleton extends Monster {
     }
 
     @Override
-    public int getAttackStrength() {
-        return attackStrength;
+    public int getAttackStrength(){
+        return MonstersStats.SKELETON.getAttackStrength();
     }
 
 }

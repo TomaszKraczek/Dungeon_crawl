@@ -8,8 +8,9 @@ import java.util.Random;
 
 public class Spider extends Monster{
 
-    public Spider(Cell cell) {
-        super(cell);
+    public Spider(Cell cell, int health, int attackStrength) {
+        super(cell, health, attackStrength);
+
     }
 
     @Override

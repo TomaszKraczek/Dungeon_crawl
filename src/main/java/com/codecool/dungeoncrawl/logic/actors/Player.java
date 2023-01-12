@@ -53,10 +53,17 @@ public class Player extends Actor {
             }
             else {
                 skeleton.setHealth((skeleton.getHealth() - attackStrength));
+                System.out.println("ja zadaje tyle dmg:" + this.getAttackStrength() + "zdrowie szkieleta:" + skeleton.getHealth());
                 this.setHealth(getHealth() - skeleton.getAttackStrength());
+                System.out.println("szkielet zadaje tyle dmg:" + skeleton.getAttackStrength() + "nasze zdrowie:" + this.getHealth());
+
             }
         }
-    }
+        }
+
+
+
+
 
     @Override
     public boolean canGoThrough(Cell cell) {

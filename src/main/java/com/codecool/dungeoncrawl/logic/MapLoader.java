@@ -54,7 +54,7 @@ public class MapLoader {
                         }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            new Skeleton(cell, MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength());
                         }
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
@@ -70,11 +70,11 @@ public class MapLoader {
                         }
                         case 'S' -> {
                             cell.setType(CellType.FLOOR);
-                            map.addMonster(new Spider(cell));
+                            map.addMonster(new Spider(cell, MonstersStats.SPIDER.getHealthPoints(), MonstersStats.SPIDER.getAttackStrength()));
                         }
                         case 'W' -> {
                             cell.setType(CellType.FLOOR);
-                            map.addMonster(new Warrior(cell));
+                            map.addMonster(new Warrior(cell, MonstersStats.WARRIOR.getHealthPoints(), MonstersStats.WARRIOR.getAttackStrength()));
                         }
                         case 'H' -> {
                             cell.setType(CellType.FLOOR);

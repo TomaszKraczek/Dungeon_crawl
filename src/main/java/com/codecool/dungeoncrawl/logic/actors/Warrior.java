@@ -4,8 +4,9 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Warrior extends Monster {
 
-    public Warrior(Cell cell) {
-        super(cell);
+    public Warrior(Cell cell, int health, int attackStrength) {
+        super(cell, health, attackStrength);
+
     }
 
     @Override

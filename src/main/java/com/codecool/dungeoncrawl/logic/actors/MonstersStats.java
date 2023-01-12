@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 public enum MonstersStats {
-    SKELETON(1, 1), SPIDER(2, 2), WARRIOR(3, 3);
+    SKELETON(10, 1), SPIDER(2, 2), WARRIOR(3, 3);
     private int healthPoints;
     private int attackStrength;
 

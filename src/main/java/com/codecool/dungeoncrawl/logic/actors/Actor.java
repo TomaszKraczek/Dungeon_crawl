@@ -32,10 +32,6 @@ public abstract class Actor implements Drawable {
         return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR;
     }
 
-    // do walidacji na czym player stoi
-    //        System.out.println(cell.getNeighbor(dx, dy).getActor());
-    //        System.out.println(cell.getItem());
-
     public abstract void fight(Actor actor);
 
     public int getHealth() {

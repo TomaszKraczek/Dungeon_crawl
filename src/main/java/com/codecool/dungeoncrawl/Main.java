@@ -43,7 +43,7 @@ public class Main extends Application {
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
 
-    private static Stage pStage;
+    private static Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -66,7 +66,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
-        pStage = primaryStage;
+        stage = primaryStage;
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
@@ -77,8 +77,6 @@ public class Main extends Application {
 
 
     }
-
-
 
     private void refresh() {
         int playerXOffset = map.getWidth() / 2;
@@ -95,7 +93,9 @@ public class Main extends Application {
         if (map.getPlayer().isPlayerKilled()) {
             gameOver();
         }
-
+        if (map.getPlayer().hasCrown()){
+            playerWins();
+        }
     }
 
     private void updateLabels() {
@@ -121,7 +121,7 @@ public class Main extends Application {
     private void ChangeMapIfDoorOpened() {
         if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
             MapLoader mapLoader = new MapLoader();
-            filename = "/map2.txt";
+            filename = "/map1.txt";
             is = MapLoader.class.getResourceAsStream(filename);
             map = mapLoader.loadMap(is);
         }
@@ -187,18 +187,28 @@ public class Main extends Application {
         for (Monster monster : map.getMonsters()) {
             monster.move();
         }
+        map.getPlayer().checkCellForCrown();
         refresh();
+
     }
 
-    public void gameOver(){
+    private void gameOver(){
+        getAlertWindow("Game over", "You were killed by a monster!");
+    }
+
+    private void playerWins(){
+        getAlertWindow("Congratulations", "You won!");
+    }
+
+    private void getAlertWindow(String title, String header){
         Alert alert = new Alert((Alert.AlertType.CONFIRMATION));
-        alert.setTitle("Game over");
-        alert.setHeaderText("You were killed by a monster!");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
         alert.setContentText("Do you want to try again?");
-        Optional<ButtonType> tryAgain=alert.showAndWait();
-        ButtonType button = tryAgain.orElse(ButtonType.OK);
+        Optional<ButtonType> result =alert.showAndWait();
+        ButtonType button = result.orElse(ButtonType.OK);
         if(button==ButtonType.OK) {
-            pStage.close();
+            stage.close();
             Platform.runLater(()->new Main().start(new Stage()));
         } else{
             System.exit(0);

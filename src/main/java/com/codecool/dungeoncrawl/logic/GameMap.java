@@ -14,8 +14,7 @@ public class GameMap {
     private Player player;
 
     private Actor actor; // <- remove it
-    private ArrayList<Monster> monsters = new ArrayList<>(); // consider special Monster class???
-    // impl addMonster(), getMonsters()
+    private ArrayList<Monster> monsters = new ArrayList<>();
     private Item item;
 
     public GameMap(int width, int height, CellType defaultCellType) {

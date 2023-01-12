@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.armor.Helmet;
 import com.codecool.dungeoncrawl.logic.items.key.Key;
+import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 
 
@@ -63,6 +64,10 @@ public class MapLoader {
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);
                             new Key(cell, "Blue key");
+                        }
+                        case 'P' -> {
+                            cell.setType(CellType.FLOOR);
+                            new Potion(cell, "potion", 5);
                         }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);

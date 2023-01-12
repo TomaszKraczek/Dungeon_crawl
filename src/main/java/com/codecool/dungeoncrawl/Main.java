@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -163,10 +164,14 @@ public class Main extends Application {
     }
 
     private void pickUpItem() {
-        if(map.getPlayer().getCell().getItem() != null){
-            map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+        if (map.getPlayer().getCell().getItem() != null) {
+            if (map.getPlayer().getCell().getItem().getName() == "potion") {
+                map.getPlayer().drinkPotion((Potion) map.getPlayer().getCell().getItem());
+            } else {
+                map.getPlayer().addItemToEq(map.getPlayer().getCell().getItem());
+            }
             map.getPlayer().getCell().setItem(null);
-        }else{
+        } else {
             System.out.println("There is no item.");
         }
     }

@@ -41,6 +41,7 @@ public class Tiles {
         tileMap.put("grass", new Tile(0,2));
         tileMap.put("spider", new Tile(28,5));
         tileMap.put("warrior", new Tile(30,2));
+        tileMap.put("potion", new Tile(24,23));
         tileMap.put("crown", new Tile(11,24));
     }
 
@@ -49,5 +50,6 @@ public class Tiles {
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }
+
 
 }

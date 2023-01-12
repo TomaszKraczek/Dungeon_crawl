@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.armor.Armor;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.crown.Crown;
+import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import com.codecool.dungeoncrawl.logic.items.weapon.Weapon;
 
 import java.util.ArrayList;
@@ -108,6 +109,12 @@ public class Player extends Actor {
     public void updatePlayerStats(){
         this.attackStrength = getSumAttack() + PlayerDefaultStats.ATTACK_POWER.getDefaultValue();
         this.armorPoints = getSumArmor() + PlayerDefaultStats.ARMOR.getDefaultValue();
+    }
+
+    public void drinkPotion(Potion potion) {
+        if (getX() == potion.getX() && getY() == potion.getY()) {
+            setHealth(getHealth() + potion.getImproveHealth());
+        }
     }
 
     private int getSumArmor(){

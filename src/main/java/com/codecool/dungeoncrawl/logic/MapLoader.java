@@ -4,10 +4,12 @@ import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.armor.Helmet;
 import com.codecool.dungeoncrawl.logic.items.crown.Crown;
 import com.codecool.dungeoncrawl.logic.items.key.Key;
+import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 
 
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -65,6 +67,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Key(cell, "Blue key");
                         }
+                        case 'P' -> {
+                            cell.setType(CellType.FLOOR);
+                            new Potion(cell, "potion", new Random().nextInt(10));
+                        }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);
                             new Sword(cell, "Two-handed sword", 4);
@@ -92,7 +98,6 @@ public class MapLoader {
                 }
             }
         }
-        System.out.println(map.getMonsters());
         return map;
     }
 

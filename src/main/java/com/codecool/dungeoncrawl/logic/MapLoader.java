@@ -54,7 +54,7 @@ public class MapLoader {
                         }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell, MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength());
+                            map.addMonster(new Skeleton(cell, MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength()));
                         }
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
@@ -87,6 +87,7 @@ public class MapLoader {
                 }
             }
         }
+        System.out.println(map.getMonsters());
         return map;
     }
 

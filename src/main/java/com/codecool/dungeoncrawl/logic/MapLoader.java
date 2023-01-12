@@ -55,6 +55,12 @@ public class MapLoader {
                         case 'g' -> {
                             cell.setType(CellType.GRASS);
                         }
+                        case 'e' -> {
+                            cell.setType(CellType.CLOSED_EXIT);
+                        }
+                        case 'E' -> {
+                            cell.setType(CellType.OPENED_EXIT);
+                        }
                         case 's' -> {
                             cell.setType(CellType.FLOOR);
                             map.addMonster(new Skeleton(cell, MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength()));

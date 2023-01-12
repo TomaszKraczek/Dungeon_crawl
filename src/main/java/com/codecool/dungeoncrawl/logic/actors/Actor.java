@@ -29,7 +29,8 @@ public abstract class Actor implements Drawable {
     }
 
     protected boolean canGoThrough(Cell cell) {
-        return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR;
+        return cell.getType() != CellType.WALL && cell.getType() != CellType.OPENED_DOOR && cell.getType() != CellType.CLOSED_DOOR
+                && cell.getType() != CellType.OPENED_EXIT && cell.getType() != CellType.CLOSED_EXIT;
     }
 
     public abstract void fight(Actor actor);

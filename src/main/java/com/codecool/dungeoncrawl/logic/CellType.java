@@ -10,7 +10,9 @@ public enum CellType {
     CONIFER("conifer"),
     PATH("path"),
     FORESTERS_LODGE("forester's lodge"),
-    GRASS("grass");
+    GRASS("grass"),
+    CLOSED_EXIT("closed exit"),
+    OPENED_EXIT("opened exit");
 
     private final String tileName;
 

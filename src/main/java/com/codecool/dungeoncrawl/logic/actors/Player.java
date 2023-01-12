@@ -87,12 +87,15 @@ public class Player extends Actor {
 
     @Override
     public boolean canGoThrough(Cell cell) {
-        if (cell.getType() == CellType.CLOSED_DOOR &&
-                equipment.stream()
-                        .anyMatch(this::isKey)) {
-            cell.setType(CellType.OPENED_DOOR);
+        if ((cell.getType() == CellType.CLOSED_DOOR || cell.getType() == CellType.CLOSED_EXIT) &&
+                equipment.stream().anyMatch(this::isKey)) {
+            switch (cell.getType()) {
+                case CLOSED_DOOR -> cell.setType(CellType.OPENED_DOOR);
+                case CLOSED_EXIT -> cell.setType(CellType.OPENED_EXIT);
+            }
+            equipment.remove(equipment.stream().filter(this::isKey).findFirst().get());
             return true;
-        } else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR;
+        } else return cell.getType() != CellType.WALL && cell.getType() != CellType.CLOSED_DOOR && cell.getType() != CellType.CLOSED_EXIT;
     }
 
     private boolean isKey(Item item){

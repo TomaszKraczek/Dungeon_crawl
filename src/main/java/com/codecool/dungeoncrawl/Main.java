@@ -30,8 +30,8 @@ public class Main extends Application {
     InputStream is = MapLoader.class.getResourceAsStream(filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            map.getWidth() * Tiles.TILE_WIDTH /1.7,
+            map.getHeight() * Tiles.TILE_WIDTH/1.7);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label armorLabel = new Label();
@@ -114,7 +114,7 @@ public class Main extends Application {
     }
 
     private void ChangeMapIfDoorOpened() {
-        if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
+        if(map.getPlayer().getCell().getType() == CellType.OPENED_EXIT){
             MapLoader mapLoader = new MapLoader();
             filename = "/map1.txt";
             is = MapLoader.class.getResourceAsStream(filename);

@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ public class Tiles {
         tileMap.put("key", new Tile(17,23));
         tileMap.put("sword", new Tile(0,29));
         tileMap.put("helmet", new Tile(4,22));
-        tileMap.put("opened door", new Tile(2,9));
+        tileMap.put(CellType.OPENED_DOOR.getTileName(), new Tile(2,9));
         tileMap.put("closed door", new Tile(0,9));
         tileMap.put("leafy tree", new Tile(4,2));
         tileMap.put("conifer", new Tile(1,1));
@@ -43,6 +44,8 @@ public class Tiles {
         tileMap.put("warrior", new Tile(30,2));
         tileMap.put("potion", new Tile(24,23));
         tileMap.put("crown", new Tile(11,24));
+        tileMap.put(CellType.OPENED_EXIT.getTileName(), new Tile(6,9));
+        tileMap.put(CellType.CLOSED_EXIT.getTileName(), new Tile(3,9));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

@@ -49,7 +49,10 @@ public class Player extends Actor {
     @Override
     public void fight (Actor actor){
         while (actor.getHealth() > 0 && getHealth() > 0) {
-            if ((actor.getHealth() - attackStrength) <= 0) {
+            if (getHealth() - actor.getAttackStrength() <= 0) {
+                isPlayerKilled=true;
+                break;
+            } else if ((actor.getHealth() - attackStrength) <= 0) {
                 actor.setHealth((actor.getHealth() - attackStrength));
                 cell.getMap().removeMonster((Monster) actor);
                 this.getCell().setActor(null);
@@ -57,9 +60,6 @@ public class Player extends Actor {
                 actor.getCell().setActor(this);
                 this.setCell(actor.getCell());
                 this.setHealth(getHealth() - actor.getAttackStrength());
-            } else if (getHealth()-attackStrength<=0) {
-                isPlayerKilled=true;
-                break;
             } else {
                 actor.setHealth((actor.getHealth() - attackStrength));
                 System.out.println("ja zadaje tyle dmg:" + this.getAttackStrength() + "zdrowie szkieleta:" + actor.getHealth());
@@ -104,6 +104,10 @@ public class Player extends Actor {
 
     public int getPlayerLvl() {
         return playerLevel;
+    }
+
+    public int incrementPlayerLevel() {
+        return ++this.playerLevel;
     }
 
     public int getPlayerExp() {

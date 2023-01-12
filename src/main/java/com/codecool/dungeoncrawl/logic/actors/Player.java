@@ -3,6 +3,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.armor.Armor;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.crown.Crown;
 import com.codecool.dungeoncrawl.logic.items.weapon.Weapon;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class Player extends Actor {
     private int experience;
     private int playerLevel = 1;
     private boolean isPlayerKilled=false;
+
+    private boolean hasCrown=false;
     private ArrayList<Item> equipment = new ArrayList<>();
     Cell cell;
 
@@ -67,6 +70,18 @@ public class Player extends Actor {
 
     public boolean isPlayerKilled(){
         return isPlayerKilled;
+    }
+
+    public void checkCellForCrown(){
+        Item item= getCell().getItem();
+           if (item instanceof Crown){
+               equipment.add(item);
+                hasCrown=true;
+        }
+    }
+
+    public boolean hasCrown(){
+        return hasCrown;
     }
 
     @Override

@@ -92,7 +92,9 @@ public class Main extends Application {
         if (map.getPlayer().isPlayerKilled()) {
             gameOver();
         }
-
+        if (map.getPlayer().hasCrown()){
+            playerWins();
+        }
     }
 
     private void updateLabels() {
@@ -176,14 +178,24 @@ public class Main extends Application {
         for (Monster monster : map.getMonsters()) {
             monster.move();
         }
+        map.getPlayer().checkCellForCrown();
         refresh();
+
     }
 
-    public void gameOver(){
+    private void gameOver(){
+        getAlertWindow("Game over", "You were killed by a monster!", "Do you want to try again?");
+    }
+
+    private void playerWins(){
+        getAlertWindow("Congratulations", "You won!", "Do you want to try again?");
+    }
+
+    private void getAlertWindow(String title, String header, String content){
         Alert alert = new Alert((Alert.AlertType.CONFIRMATION));
-        alert.setTitle("Game over");
-        alert.setHeaderText("You were killed by a monster!");
-        alert.setContentText("Do you want to try again?");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
         Optional<ButtonType> tryAgain=alert.showAndWait();
         ButtonType button = tryAgain.orElse(ButtonType.OK);
         if(button==ButtonType.OK) {
@@ -193,5 +205,9 @@ public class Main extends Application {
             System.exit(0);
         }
     }
+
+
+
+
 
 }

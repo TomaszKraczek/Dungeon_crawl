@@ -22,12 +22,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Optional;
 
 
 public class Main extends Application {
-    String filename = "/map.txt";
-    InputStream is = MapLoader.class.getResourceAsStream(filename);
+    String filename = levelmaps.get(1);
+
+
+    InputStream is = MapLoader.class.getResourceAsStream("/" + filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH /1.7,
@@ -41,6 +44,11 @@ public class Main extends Application {
     Button pickUpButton = new Button("Pick up");
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
+    private static HashMap<Integer, String> levelmaps = new HashMap<>();
+    static {
+        levelmaps.put(1, "map.txt");
+        levelmaps.put(2, "map3.txt");
+    }
 
     private static Stage stage;
 
@@ -116,9 +124,10 @@ public class Main extends Application {
     private void ChangeMapIfDoorOpened() {
         if(map.getPlayer().getCell().getType() == CellType.OPENED_EXIT){
             MapLoader mapLoader = new MapLoader();
-            filename = "/map3.txt";
-            is = MapLoader.class.getResourceAsStream(filename);
+            filename = levelmaps.get(map.getPlayer().incrementPlayerLevel());
+            is = MapLoader.class.getResourceAsStream("/" + filename);
             map = mapLoader.loadMap(is);
+
         }
     }
 

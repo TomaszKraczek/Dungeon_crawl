@@ -106,6 +106,10 @@ public class Player extends Actor {
         return playerLevel;
     }
 
+    public int incrementPlayerLevel() {
+        return ++this.playerLevel;
+    }
+
     public int getPlayerExp() {
         return experience;
     }

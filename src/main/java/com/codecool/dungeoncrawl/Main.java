@@ -77,10 +77,6 @@ public class Main extends Application {
 
     }
 
-//    private void setPrimaryStage(Stage primaryStage) {
-//        Main.primaryStage = primaryStage;
-//    }
-
     private void refresh() {
         int playerXOffset = map.getWidth() / 2;
         int playerYOffset = map.getHeight() / 2;

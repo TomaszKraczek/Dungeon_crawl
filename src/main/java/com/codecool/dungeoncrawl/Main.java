@@ -30,8 +30,8 @@ public class Main extends Application {
     InputStream is = MapLoader.class.getResourceAsStream(filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH /1.7,
-            map.getHeight() * Tiles.TILE_WIDTH/1.7);
+            map.getWidth() * Tiles.TILE_WIDTH ,
+            map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label armorLabel = new Label();
@@ -167,7 +167,9 @@ public class Main extends Application {
             }
             map.getPlayer().getCell().setItem(null);
         } else {
-            System.out.println("There is no item.");
+//            getAlertWindow("", "There is no item.");
+//            System.out.println("There is no item.");
+            showNoItemMessage("", "There is no item.");
         }
     }
 
@@ -208,6 +210,14 @@ public class Main extends Application {
         } else{
             System.exit(0);
         }
+    }
+
+
+    private void showNoItemMessage(String title, String header){
+        Alert alert = new Alert((Alert.AlertType.INFORMATION));
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.showAndWait();
     }
 
 }

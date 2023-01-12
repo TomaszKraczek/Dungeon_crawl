@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.items.Item;
 
 public class Potion extends Item {
     int improveHealth;
+
     public Potion(Cell cell, String name, int improveHealth) {
         super(cell, name);
         this.improveHealth = improveHealth;

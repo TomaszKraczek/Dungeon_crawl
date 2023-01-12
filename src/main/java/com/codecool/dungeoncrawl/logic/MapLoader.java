@@ -9,6 +9,7 @@ import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 
 
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -68,7 +69,7 @@ public class MapLoader {
                         }
                         case 'P' -> {
                             cell.setType(CellType.FLOOR);
-                            new Potion(cell, "potion", 5);
+                            new Potion(cell, "potion", new Random().nextInt(10));
                         }
                         case '1' -> {
                             cell.setType(CellType.FLOOR);
@@ -97,7 +98,6 @@ public class MapLoader {
                 }
             }
         }
-        System.out.println(map.getMonsters());
         return map;
     }
 

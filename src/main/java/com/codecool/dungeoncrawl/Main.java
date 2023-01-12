@@ -115,7 +115,7 @@ public class Main extends Application {
     private void ChangeMapIfDoorOpened() {
         if(map.getPlayer().getCell().getType() == CellType.OPENED_DOOR){
             MapLoader mapLoader = new MapLoader();
-            filename = "/map2.txt";
+            filename = "/map1.txt";
             is = MapLoader.class.getResourceAsStream(filename);
             map = mapLoader.loadMap(is);
         }

@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.weapon.Weapon;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Player extends Actor {
@@ -14,6 +13,7 @@ public class Player extends Actor {
     private int armorPoints;
     private int experience;
     private int playerLevel = 1;
+    private boolean isPlayerKilled=false;
     private ArrayList<Item> equipment = new ArrayList<>();
     Cell cell;
 
@@ -52,19 +52,22 @@ public class Player extends Actor {
                 System.out.println("You win");
                 actor.getCell().setActor(this);
                 this.setCell(actor.getCell());
-            }
-            else {
+                this.setHealth(getHealth() - actor.getAttackStrength());
+            } else if (getHealth()-attackStrength<=0) {
+                isPlayerKilled=true;
+                break;
+            } else {
                 actor.setHealth((actor.getHealth() - attackStrength));
                 System.out.println("ja zadaje tyle dmg:" + this.getAttackStrength() + "zdrowie szkieleta:" + actor.getHealth());
-                this.setHealth(getHealth() - actor.getAttackStrength());
+                //this.setHealth(getHealth() - actor.getAttackStrength());
                 System.out.println("szkielet zadaje tyle dmg:" + actor.getAttackStrength() + "nasze zdrowie:" + this.getHealth());
             }
         }
     }
 
-
-
-
+    public boolean isPlayerKilled(){
+        return isPlayerKilled;
+    }
 
     @Override
     public boolean canGoThrough(Cell cell) {

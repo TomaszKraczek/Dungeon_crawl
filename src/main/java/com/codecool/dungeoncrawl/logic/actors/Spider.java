@@ -34,4 +34,9 @@ public class Spider extends Monster{
     public String getTileName() {
         return "spider";
     }
+
+    @Override
+    public int getAttackStrength(){
+        return MonstersStats.SPIDER.getAttackStrength();
+    }
 }

@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.items.Key;
+package com.codecool.dungeoncrawl.logic.items.key;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.items.Item;

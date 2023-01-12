@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.*;
-import com.codecool.dungeoncrawl.logic.items.Armor.Helmet;
-import com.codecool.dungeoncrawl.logic.items.Key.Key;
-import com.codecool.dungeoncrawl.logic.items.Weapon.Sword;
+import com.codecool.dungeoncrawl.logic.actors.Warrior;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Spider;
+import com.codecool.dungeoncrawl.logic.items.armor.Helmet;
+import com.codecool.dungeoncrawl.logic.items.key.Key;
+import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 
 
 import java.io.InputStream;

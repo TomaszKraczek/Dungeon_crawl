@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.weapon.Weapon;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Player extends Actor {
@@ -14,10 +15,11 @@ public class Player extends Actor {
     private int experience;
     private int playerLevel = 1;
     private ArrayList<Item> equipment = new ArrayList<>();
-
+    Cell cell;
 
     public Player(Cell cell, int health) {
         super(cell, health);
+        this.cell=cell;
     }
 
    public void addItemToEq(Item item) {
@@ -41,25 +43,24 @@ public class Player extends Actor {
     }
 
     @Override
-    public void fight (Actor skeleton){
-
-        while (skeleton.getHealth() > 0 && getHealth() > 0) {
-            if ((skeleton.getHealth() - attackStrength) <= 0) {
-                skeleton.setHealth((skeleton.getHealth() - attackStrength));
+    public void fight (Actor actor){
+        while (actor.getHealth() > 0 && getHealth() > 0) {
+            if ((actor.getHealth() - attackStrength) <= 0) {
+                actor.setHealth((actor.getHealth() - attackStrength));
+                cell.getMap().removeMonster((Monster) actor);
                 this.getCell().setActor(null);
                 System.out.println("You win");
-                skeleton.getCell().setActor(this);
-                this.setCell(skeleton.getCell());
+                actor.getCell().setActor(this);
+                this.setCell(actor.getCell());
             }
             else {
-                skeleton.setHealth((skeleton.getHealth() - attackStrength));
-                System.out.println("ja zadaje tyle dmg:" + this.getAttackStrength() + "zdrowie szkieleta:" + skeleton.getHealth());
-                this.setHealth(getHealth() - skeleton.getAttackStrength());
-                System.out.println("szkielet zadaje tyle dmg:" + skeleton.getAttackStrength() + "nasze zdrowie:" + this.getHealth());
-
+                actor.setHealth((actor.getHealth() - attackStrength));
+                System.out.println("ja zadaje tyle dmg:" + this.getAttackStrength() + "zdrowie szkieleta:" + actor.getHealth());
+                this.setHealth(getHealth() - actor.getAttackStrength());
+                System.out.println("szkielet zadaje tyle dmg:" + actor.getAttackStrength() + "nasze zdrowie:" + this.getHealth());
             }
         }
-        }
+    }
 
 
 

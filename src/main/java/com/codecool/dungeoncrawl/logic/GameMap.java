@@ -33,6 +33,10 @@ public class GameMap {
         monsters.add(monster);
     }
 
+    public void removeMonster(Monster monster) {
+        monsters.remove(monster);
+    }
+
     public ArrayList<Monster> getMonsters() {
         return monsters;
     }

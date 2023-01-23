@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -15,6 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -24,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Optional;
+import java.sql.SQLException;
 
 
 public class Main extends Application {
@@ -51,13 +57,15 @@ public class Main extends Application {
     }
 
     private static Stage stage;
+    GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
+        setupDbManager();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -211,12 +219,12 @@ public class Main extends Application {
         alert.setContentText("Do you want to try again?");
         Optional<ButtonType> result =alert.showAndWait();
         ButtonType button = result.orElse(ButtonType.OK);
-        if(button==ButtonType.OK) {
-            stage.close();
-            Platform.runLater(()->new Main().start(new Stage()));
-        } else{
-            System.exit(0);
-        }
+//        if(button==ButtonType.OK) {
+//            stage.close();
+//            Platform.runLater(()->new Main().start(new Stage()));
+//        } else{
+//            System.exit(0);
+//        }
     }
 
 
@@ -225,6 +233,31 @@ public class Main extends Application {
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.showAndWait();
+    }
+    private void exit() {
+        try {
+            stop();
+        } catch (Exception e) {
+            System.exit(1);
+        }
+        System.exit(0);
+    }
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
+    }
+    private void onKeyReleased(KeyEvent keyEvent) {
+        KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
+        if (exitCombinationMac.match(keyEvent)
+                || exitCombinationWin.match(keyEvent)
+                || keyEvent.getCode() == KeyCode.ESCAPE) {
+            exit();
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+//import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -57,7 +57,7 @@ public class Main extends Application {
     }
 
     private static Stage stage;
-    GameDatabaseManager dbManager;
+//    GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
         launch(args);
@@ -65,7 +65,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        setupDbManager();
+//        setupDbManager();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -242,14 +242,14 @@ public class Main extends Application {
         }
         System.exit(0);
     }
-    private void setupDbManager() {
-        dbManager = new GameDatabaseManager();
-        try {
-            dbManager.setup();
-        } catch (SQLException ex) {
-            System.out.println("Cannot connect to database.");
-        }
-    }
+//    private void setupDbManager() {
+//        dbManager = new GameDatabaseManager();
+//        try {
+//            dbManager.setup();
+//        } catch (SQLException ex) {
+//            System.out.println("Cannot connect to database.");
+//        }
+//    }
     private void onKeyReleased(KeyEvent keyEvent) {
         KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
         KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);

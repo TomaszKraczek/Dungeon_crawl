@@ -48,6 +48,7 @@ public class Main extends Application {
     Label expLabel = new Label();
     Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
+    ExportBtn exportBtn = new ExportBtn();
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
@@ -74,6 +75,7 @@ public class Main extends Application {
         addLabels(ui);
 
         addPickupButton(ui);
+        exportBtn.addExportButton(ui);
 
         BorderPane borderPane = new BorderPane();
 
@@ -177,6 +179,7 @@ public class Main extends Application {
         });
     }
 
+
     private void pickUpItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             if (map.getPlayer().getCell().getItem().getName() == "potion") {
@@ -237,6 +240,9 @@ public class Main extends Application {
         } else {
             System.exit(0);
         }
+    }
+    private void showExportPrompt(){
+
     }
 
 

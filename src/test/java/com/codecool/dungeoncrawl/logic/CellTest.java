@@ -1,6 +1,10 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Spider;
+import com.codecool.dungeoncrawl.logic.actors.Warrior;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.armor.Helmet;
 import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +49,29 @@ class CellTest {
         Cell cell = map.getCell(2,1);
         cell.setType(CellType.FLOOR);
         assertEquals("floor", cell.getTileName());
+    }
+
+    @Test
+    void checkIfSetActorProperly() {
+        Cell cell = map.getCell(2,1);
+        Actor actor = new Warrior(cell, 5, 5);
+        cell.setActor(actor);
+        assertEquals(actor, cell.getActor());
+    }
+
+    @Test
+    void checkIfSetItemProperly() {
+        Cell cell = map.getCell(2,2);
+        Item item = new Helmet(cell, "helmet", 5);
+        cell.setItem(item);
+        assertEquals(item, cell.getItem());
+    }
+
+    @Test
+    void checkIfSetCellTypeProperly() {
+        Cell cell = map.getCell(1,1);
+        cell.setType(CellType.OPENED_DOOR);
+        assertEquals(CellType.OPENED_DOOR, cell.getType());
     }
 
 }

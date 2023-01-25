@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -26,8 +25,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Optional;
@@ -187,10 +184,6 @@ public class Main extends Application {
             map.getPlayer().getCell().setItem(null);
         } else {
             showNoItemMessage("", "There is no item.");
-
-            // TODO do usunięcia, fragment testowy dla bazy danych
-
-            dbManager.savePlayer(map.getPlayer());
         }
     }
 
@@ -276,9 +269,8 @@ public class Main extends Application {
         KeyCombination saveGame = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
 
         if (saveGame.match(keyEvent)) {
-            // TODO usuń souta, log sprawdzający kombinację klawiszy
-            System.out.println("wchodzi tutaj");
             String saveName = getSaveNameFromWindow();
+            dbManager.saveGame(saveName, map);
         }
     }
 

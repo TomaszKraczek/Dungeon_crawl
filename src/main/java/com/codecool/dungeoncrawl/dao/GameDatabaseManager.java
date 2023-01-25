@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.dao;
 
+import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -9,15 +11,17 @@ import java.sql.SQLException;
 
 public class GameDatabaseManager {
     private PlayerDao playerDao;
+    private GameStateDao gameStateDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
         playerDao = new PlayerDaoJdbc(dataSource);
+        gameStateDao = new GameStateDaoJdbc(dataSource);
     }
 
-    public void savePlayer(Player player) {
+    public int savePlayerAndReturnHisId(Player player) {
         PlayerModel model = new PlayerModel(player);
-        playerDao.add(model);
+        return playerDao.add(model);
     }
 
     private DataSource connect() throws SQLException {
@@ -33,7 +37,17 @@ public class GameDatabaseManager {
         System.out.println("Trying to connect");
         dataSource.getConnection().close();
         System.out.println("Connection ok.");
-
         return dataSource;
+    }
+
+    public void saveGame(String saveName, GameMap map) {
+         PlayerModel model = new PlayerModel(map.getPlayer());
+         int playerId = playerDao.add(model);
+
+         //TODO jak wybierać planszę
+         GameState gameState = new GameState("1", model, playerId);
+         gameStateDao.add(gameState, saveName);
+         System.out.println(gameState.toString());
+
     }
 }

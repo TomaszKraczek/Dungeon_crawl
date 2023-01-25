@@ -1,26 +1,35 @@
 package com.codecool.dungeoncrawl.model;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameState extends BaseModel {
-    private Date savedAt;
+    private LocalDateTime savedAt;
     private String currentMap;
     private List<String> discoveredMaps = new ArrayList<>();
     private PlayerModel player;
+    private int playerId;
 
-    public GameState(String currentMap, Date savedAt, PlayerModel player) {
+    public GameState(String currentMap, PlayerModel player, int playerId) {
         this.currentMap = currentMap;
-        this.savedAt = savedAt;
+        this.savedAt = LocalDateTime.now();
         this.player = player;
+        this.playerId = playerId;
     }
 
-    public Date getSavedAt() {
-        return savedAt;
+    public Timestamp getSavedAt() {
+        System.out.println(savedAt.toLocalDate());
+        return Timestamp.valueOf(savedAt);
+    }
+    public int getPlayerId(){
+        return playerId;
     }
 
-    public void setSavedAt(Date savedAt) {
+    public void setSavedAt(LocalDateTime savedAt) {
         this.savedAt = savedAt;
     }
 
@@ -46,5 +55,13 @@ public class GameState extends BaseModel {
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
+    }
+    @Override
+    public String toString(){
+        StringBuilder build = new StringBuilder()
+                .append("Player Id: " + playerId)
+                .append(" Date of save: " + savedAt)
+                .append(" Player name: " + player.getPlayerName());
+        return build.toString();
     }
 }

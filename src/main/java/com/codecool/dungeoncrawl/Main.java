@@ -12,6 +12,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -24,6 +26,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -66,6 +69,54 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        showMenu(primaryStage);
+    }
+
+    private void showMenu(Stage primaryStage) {
+        Menu m = new Menu("Menu");
+
+        MenuItem m1 = new MenuItem("Play new game");
+        MenuItem m2 = new MenuItem("Play saved game");
+        MenuItem m3 = new MenuItem("Exit");
+
+        m.getItems().add(m1);
+        m.getItems().add(m2);
+        m.getItems().add(m3);
+
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    startGame(primaryStage);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        EventHandler<ActionEvent> event3 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    exit();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+
+        m1.setOnAction(event);
+        m2.setOnAction(event);
+        m3.setOnAction(event3);
+
+        MenuBar mb = new MenuBar();
+        mb.getMenus().add(m);
+
+        VBox vb = new VBox(mb);
+        Scene sc = new Scene(vb, 500, 300);
+        primaryStage.setScene(sc);
+        primaryStage.show();
+    }
+
+    //    @Override
+    public void startGame(Stage primaryStage) throws Exception {
         dbManager.setup();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);

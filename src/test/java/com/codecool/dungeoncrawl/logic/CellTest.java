@@ -74,4 +74,25 @@ class CellTest {
         assertEquals(CellType.OPENED_DOOR, cell.getType());
     }
 
+    @Test
+    void getXReturnCellX() {
+        GameMap map = new GameMap(3, 3, CellType.FLOOR);
+        Cell cell = map.getCell(2,2);
+        assertEquals(2, cell.getX());
+    }
+
+    @Test
+    void getYReturnCellY() {
+        GameMap map = new GameMap(3, 3, CellType.FLOOR);
+        Cell cell = map.getCell(1,0);
+        assertEquals(0, cell.getY());
+    }
+
+    @Test
+    void getMapReturnCurrentMap() {
+        GameMap map = new GameMap(5, 5, CellType.CONIFER);
+        Cell cell = map.getCell(3,3);
+        assertEquals(map, cell.getMap());
+    }
+
 }

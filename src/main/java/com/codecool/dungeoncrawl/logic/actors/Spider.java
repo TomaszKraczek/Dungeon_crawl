@@ -24,7 +24,7 @@ public class Spider extends Monster{
         }
     }
 
-    private String getRandomDirection(){
+    public String getRandomDirection(){
         List<String> directions = Arrays.asList("UP", "DOWN", "LEFT", "RIGHT");
         Random random = new Random();
         return directions.get(random.nextInt(directions.size()));

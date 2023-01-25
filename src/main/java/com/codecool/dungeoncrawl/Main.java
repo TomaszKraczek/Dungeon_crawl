@@ -1,4 +1,5 @@
 package com.codecool.dungeoncrawl;
+
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
@@ -8,6 +9,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -49,6 +51,7 @@ public class Main extends Application {
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
+
     static {
         levelmaps.put(1, "map.txt");
         levelmaps.put(2, "map3.txt");
@@ -82,6 +85,7 @@ public class Main extends Application {
         stage = primaryStage;
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
+        scene.setOnKeyReleased(this::onKeyReleased);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
@@ -102,7 +106,7 @@ public class Main extends Application {
         if (map.getPlayer().isPlayerKilled()) {
             gameOver();
         }
-        if (map.getPlayer().hasCrown()){
+        if (map.getPlayer().hasCrown()) {
             playerWins();
         }
     }
@@ -122,13 +126,13 @@ public class Main extends Application {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
-                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y  - map.getPlayer().getY() + playerYOffset);
+                Tiles.drawTile(context, cell, x - map.getPlayer().getX() + playerXOffset, y - map.getPlayer().getY() + playerYOffset);
             }
         }
     }
 
     private void ChangeMapIfDoorOpened() {
-        if(map.getPlayer().getCell().getType() == CellType.OPENED_EXIT){
+        if (map.getPlayer().getCell().getType() == CellType.OPENED_EXIT) {
             MapLoader mapLoader = new MapLoader();
             filename = levelmaps.get(map.getPlayer().incrementPlayerLevel());
             is = MapLoader.class.getResourceAsStream("/" + filename);
@@ -206,36 +210,43 @@ public class Main extends Application {
 
     }
 
-    private void gameOver(){
+    private void gameOver() {
         getAlertWindow("Game over", "You were killed by a monster!");
     }
 
-    private void playerWins(){
+    private void playerWins() {
         getAlertWindow("Congratulations", "You won!");
     }
 
-    private void getAlertWindow(String title, String header){
-        Alert alert = new Alert((Alert.AlertType.CONFIRMATION));
+    private void getAlertWindow(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText("Do you want to try again?");
-        Optional<ButtonType> result =alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
         ButtonType button = result.orElse(ButtonType.OK);
-//        if(button==ButtonType.OK) {
-//            stage.close();
-//            Platform.runLater(()->new Main().start(new Stage()));
-//        } else{
-//            System.exit(0);
-//        }
+        if (button == ButtonType.OK) {
+            stage.close();
+            Platform.runLater(() -> {
+                try {
+                    new Main().start(new Stage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } else {
+            System.exit(0);
+        }
     }
 
 
-    private void showNoItemMessage(String title, String header){
+    private void showNoItemMessage(String title, String header) {
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.showAndWait();
     }
+
     private void exit() {
         try {
             stop();
@@ -244,6 +255,7 @@ public class Main extends Application {
         }
         System.exit(0);
     }
+
     private void setupDbManager() {
         GameDatabaseManager dbManager = new GameDatabaseManager();
         try {
@@ -252,6 +264,7 @@ public class Main extends Application {
             System.out.println("Cannot connect to database.");
         }
     }
+
     private void onKeyReleased(KeyEvent keyEvent) {
         KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
         KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
@@ -260,6 +273,26 @@ public class Main extends Application {
                 || keyEvent.getCode() == KeyCode.ESCAPE) {
             exit();
         }
+        KeyCombination saveGame = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
+
+        if (saveGame.match(keyEvent)) {
+            // TODO usuń souta, log sprawdzający kombinację klawiszy
+            System.out.println("wchodzi tutaj");
+            String saveName = getSaveNameFromWindow();
+        }
     }
 
+    private String getSaveNameFromWindow() {
+        TextInputDialog saveWindow = new TextInputDialog();
+        saveWindow.setTitle("Save game");
+        saveWindow.setHeaderText("");
+        Button okButton = (Button) saveWindow.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.setText("Save");
+        saveWindow.getDialogPane().setContentText("Save name");
+        Optional<String> result = saveWindow.showAndWait();
+        if(result.isPresent()){
+            return result.get();
+        }
+        return null;
+    }
 }

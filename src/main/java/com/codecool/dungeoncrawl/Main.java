@@ -1,7 +1,8 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.buttons.ExportBtn;
+import com.codecool.dungeoncrawl.buttons.ImportBtn;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -27,7 +28,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Optional;
@@ -49,6 +49,7 @@ public class Main extends Application {
     Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
     ExportBtn exportBtn = new ExportBtn();
+    ImportBtn importBtn = new ImportBtn();
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
@@ -76,6 +77,7 @@ public class Main extends Application {
 
         addPickupButton(ui);
         exportBtn.addExportButton(ui);
+        importBtn.addImportButton(ui);
 
         BorderPane borderPane = new BorderPane();
 

@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl;
+package com.codecool.dungeoncrawl.buttons;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

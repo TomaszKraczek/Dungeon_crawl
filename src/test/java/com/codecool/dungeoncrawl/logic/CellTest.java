@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Spider;
+import com.codecool.dungeoncrawl.logic.items.weapon.Sword;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,4 +25,26 @@ class CellTest {
         cell = map.getCell(1, 2);
         assertEquals(null, cell.getNeighbor(0, 1));
     }
+
+    @Test
+    void getActorNameFromCell() {
+        Cell cell = map.getCell(2,1);
+        cell.setActor(new Spider(cell, 5, 5));
+        assertEquals("spider", cell.getTileName());
+    }
+
+    @Test
+    void getItemNameFromCell() {
+        Cell cell = map.getCell(1,2);
+        cell.setItem(new Sword(cell, "sword", 5));
+        assertEquals("sword", cell.getTileName());
+    }
+
+    @Test
+    void getEmptyCellNameFromCell() {
+        Cell cell = map.getCell(2,1);
+        cell.setType(CellType.FLOOR);
+        assertEquals("floor", cell.getTileName());
+    }
+
 }

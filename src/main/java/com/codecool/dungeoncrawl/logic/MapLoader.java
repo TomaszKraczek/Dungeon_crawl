@@ -67,7 +67,7 @@ public class MapLoader {
                         }
                         case '@' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell, PlayerDefaultStats.HEALTH.getDefaultValue()));
+                            map.setPlayer(new Player(0 ,cell, PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz"));
                         }
                         case 'k' -> {
                             cell.setType(CellType.FLOOR);

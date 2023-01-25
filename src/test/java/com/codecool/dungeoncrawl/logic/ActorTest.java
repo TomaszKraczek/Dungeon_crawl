@@ -13,7 +13,7 @@ class ActorTest {
 
     @Test
     void moveUpdatesCells() {
-        Player player = new Player(gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue());
+        Player player = new Player(0 ,gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz");
         player.move(1, 0);
 
         assertEquals(2, player.getX());
@@ -25,7 +25,7 @@ class ActorTest {
     @Test
     void cannotMoveIntoWall() {
         gameMap.getCell(2, 1).setType(CellType.WALL);
-        Player player = new Player(gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue());
+        Player player = new Player(0, gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz");
         player.move(1, 0);
 
         assertEquals(1, player.getX());
@@ -34,7 +34,7 @@ class ActorTest {
 
     @Test
     void cannotMoveOutOfMap() {
-        Player player = new Player(gameMap.getCell(2, 1), PlayerDefaultStats.HEALTH.getDefaultValue());
+        Player player = new Player(0, gameMap.getCell(2, 1), PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz");
         player.move(1, 0);
 
         assertEquals(2, player.getX());
@@ -43,7 +43,7 @@ class ActorTest {
 
     @Test
     void cannotMoveIntoAnotherActor() {
-        Player player = new Player(gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue());
+        Player player = new Player(0, gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz");
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength());
         player.move(1, 0);
 

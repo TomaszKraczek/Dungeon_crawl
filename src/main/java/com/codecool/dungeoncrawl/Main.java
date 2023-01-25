@@ -1,6 +1,6 @@
 package com.codecool.dungeoncrawl;
-
-//import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
@@ -8,7 +8,6 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
 import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -26,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Optional;
@@ -34,8 +34,6 @@ import java.sql.SQLException;
 
 public class Main extends Application {
     String filename = levelmaps.get(1);
-
-
     InputStream is = MapLoader.class.getResourceAsStream("/" + filename);
     GameMap map = new MapLoader().loadMap(is);
     Canvas canvas = new Canvas(
@@ -57,7 +55,7 @@ public class Main extends Application {
     }
 
     private static Stage stage;
-//    GameDatabaseManager dbManager;
+    GameDatabaseManager dbManager = new GameDatabaseManager();
 
     public static void main(String[] args) {
         launch(args);
@@ -65,7 +63,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        setupDbManager();
+        dbManager.setup();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -185,6 +183,10 @@ public class Main extends Application {
             map.getPlayer().getCell().setItem(null);
         } else {
             showNoItemMessage("", "There is no item.");
+
+            // TODO do usunięcia, fragment testowy dla bazy danych
+
+            dbManager.savePlayer(map.getPlayer());
         }
     }
 
@@ -242,14 +244,14 @@ public class Main extends Application {
         }
         System.exit(0);
     }
-//    private void setupDbManager() {
-//        dbManager = new GameDatabaseManager();
-//        try {
-//            dbManager.setup();
-//        } catch (SQLException ex) {
-//            System.out.println("Cannot connect to database.");
-//        }
-//    }
+    private void setupDbManager() {
+        GameDatabaseManager dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
+    }
     private void onKeyReleased(KeyEvent keyEvent) {
         KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
         KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);

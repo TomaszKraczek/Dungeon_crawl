@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Player extends Actor {
+    private int id;
     private int attackStrength;
     private int armorPoints;
     private int experience;
@@ -19,13 +20,22 @@ public class Player extends Actor {
 
     private boolean hasCrown=false;
     private ArrayList<Item> equipment = new ArrayList<>();
-    Cell cell;
+    private Cell cell;
 
-    public Player(Cell cell, int health) {
+    private String name;
+
+    public Player(int id, Cell cell, int health, String name) {
         super(cell, health);
+        this.id = id;
         this.cell=cell;
+        this.name = name;
     }
-
+    public String getName(){
+        return name;
+    }
+    public int getId(){
+        return id;
+    }
    public void addItemToEq(Item item) {
         equipment.add(item);
     }

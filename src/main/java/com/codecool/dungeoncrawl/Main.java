@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.buttons.ExportBtn;
+import com.codecool.dungeoncrawl.buttons.ImportBtn;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
@@ -25,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Optional;
@@ -45,6 +48,8 @@ public class Main extends Application {
     Label expLabel = new Label();
     Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
+    ExportBtn exportBtn = new ExportBtn();
+    ImportBtn importBtn = new ImportBtn();
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
@@ -71,6 +76,8 @@ public class Main extends Application {
         addLabels(ui);
 
         addPickupButton(ui);
+        exportBtn.addExportButton(ui, map.getPlayer());
+        importBtn.addImportButton(ui);
 
         BorderPane borderPane = new BorderPane();
 
@@ -174,6 +181,7 @@ public class Main extends Application {
         });
     }
 
+
     private void pickUpItem() {
         if (map.getPlayer().getCell().getItem() != null) {
             if (map.getPlayer().getCell().getItem().getName() == "potion") {
@@ -231,6 +239,7 @@ public class Main extends Application {
             System.exit(0);
         }
     }
+
 
 
     private void showNoItemMessage(String title, String header) {

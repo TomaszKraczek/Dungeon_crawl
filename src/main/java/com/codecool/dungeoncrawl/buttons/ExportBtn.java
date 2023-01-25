@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.buttons;
 
-import javafx.scene.control.Alert;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
@@ -8,7 +9,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.json.simple.JSONObject;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,30 +18,35 @@ public class ExportBtn {
     private Window window;
 
 
-    public void addExportButton(GridPane ui){
+
+
+    public void addExportButton(GridPane ui, Player player){
         ui.add(exportButton, 0, 500);
         exportButton.setFocusTraversable(false);
         exportButton.setOnAction(event -> {
             File selectedFilePath = selectFilePath();
-            makeJson(selectedFilePath);
+            makeJson(selectedFilePath, player);
         });
     }
 
-    private static void makeJson(File selectedFile) {
+    private void makeJson(File selectedFile, Player player) {
         JSONObject jsonObject = new JSONObject();
-        insertDataToJsonObject(jsonObject);
+        insertDataToJsonObject(jsonObject, player);
 
         tryToSaveFile(selectedFile, jsonObject);
         System.out.println("JSON file created: "+jsonObject);
     }
 
-    private static void insertDataToJsonObject(JSONObject jsonObject) {
-        jsonObject.put("name", "Mariusz");
-        jsonObject.put("x", "420");
-        jsonObject.put("y", "420");
+    private void insertDataToJsonObject(JSONObject jsonObject, Player player) {
+        jsonObject.put("name", player.getName());
+        jsonObject.put("x", player.getX());
+        jsonObject.put("y", player.getY());
+        jsonObject.put("hp", player.getHealth());
+        jsonObject.put("attack", player.getAttackStrength());
+        jsonObject.put("armor", player.getArmorPoints());
     }
 
-    private static void tryToSaveFile(File selectedFile, JSONObject jsonObject) {
+    private void tryToSaveFile(File selectedFile, JSONObject jsonObject) {
         try {
             FileWriter file = new FileWriter(selectedFile);
             file.write(jsonObject.toJSONString());

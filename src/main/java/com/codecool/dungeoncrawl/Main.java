@@ -76,7 +76,7 @@ public class Main extends Application {
         addLabels(ui);
 
         addPickupButton(ui);
-        exportBtn.addExportButton(ui);
+        exportBtn.addExportButton(ui, map.getPlayer());
         importBtn.addImportButton(ui);
 
         BorderPane borderPane = new BorderPane();

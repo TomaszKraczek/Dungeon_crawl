@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Monster;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.potion.Potion;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,12 +40,10 @@ import java.sql.SQLException;
 
 public class Main extends Application {
     String filename = levelmaps.get(1);
-    InputStream is = MapLoader.class.getResourceAsStream("/" + filename);
-    GameMap map = new MapLoader().loadMap(is);
-    Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
-    GraphicsContext context = canvas.getGraphicsContext2D();
+    InputStream is;
+    GameMap map;
+    Canvas canvas;
+    GraphicsContext context;
     Label healthLabel = new Label();
     Label armorLabel = new Label();
     Label attackPowerLabel = new Label();
@@ -74,7 +73,7 @@ public class Main extends Application {
         showMenu(primaryStage);
     }
 
-    private void showMenu(Stage primaryStage) {
+    private void showMenu(Stage menuStage) {
         Menu m = new Menu("Menu");
 
         MenuItem m1 = new MenuItem("Play new game");
@@ -85,10 +84,18 @@ public class Main extends Application {
         m.getItems().add(m2);
         m.getItems().add(m3);
 
+        MenuBar mb = new MenuBar();
+        mb.getMenus().add(m);
+
+        VBox vb = new VBox(mb);
+        Scene sc = new Scene(vb, 300, 300);
+        menuStage.setScene(sc);
+        menuStage.show();
+
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 try {
-                    startGame(primaryStage);
+                    startGame(menuStage);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -108,18 +115,15 @@ public class Main extends Application {
         m2.setOnAction(event);
         m3.setOnAction(event3);
 
-        MenuBar mb = new MenuBar();
-        mb.getMenus().add(m);
 
-        VBox vb = new VBox(mb);
-        Scene sc = new Scene(vb, 500, 300);
-        primaryStage.setScene(sc);
-        primaryStage.show();
     }
 
     //    @Override
     public void startGame(Stage primaryStage) throws Exception {
         dbManager.setup();
+        setupMapTxt("map.txt");
+        canvasSetup();
+        createPlayer();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -144,6 +148,24 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void setupMapTxt(String filename) {
+        is = MapLoader.class.getResourceAsStream("/" + filename);
+        map = new MapLoader().loadMap(is);
+    }
+
+    private void createPlayer() {
+        Cell playerCell = new Cell(map, 18,18,CellType.FLOOR);
+        map.setPlayer(new Player(1,playerCell, 50, "Tomasz"));
+        refresh();
+    }
+
+    private void canvasSetup() {
+        canvas = new Canvas(
+                map.getWidth() * Tiles.TILE_WIDTH,
+                map.getHeight() * Tiles.TILE_WIDTH);
+        context = canvas.getGraphicsContext2D();
     }
 
     private void refresh() {

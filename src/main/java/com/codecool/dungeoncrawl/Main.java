@@ -59,7 +59,8 @@ public class Main extends Application {
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
-
+/* blok static wykona się przy inicjalizacji KLASY! zawsze, dając pewność,
+że w momencie gdy potrzebujemy levelmaps jest już gotowe  */
     static {
         levelmaps.put(1, "map.txt");
         levelmaps.put(2, "map3.txt");

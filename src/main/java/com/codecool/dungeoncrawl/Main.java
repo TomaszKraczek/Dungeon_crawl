@@ -32,14 +32,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.sql.SQLException;
 
 
 public class Main extends Application {
     String filename;
+    int startingX = 18;
+    int startingY = 18;
     InputStream is;
     GameMap map;
     Canvas canvas;
@@ -51,7 +55,7 @@ public class Main extends Application {
     Label playerLvlLabel = new Label();
     Button pickUpButton = new Button("Pick up");
     ExportBtn exportBtn = new ExportBtn();
-    ImportBtn importBtn = new ImportBtn();
+    ImportBtn importClass = new ImportBtn();
     ObservableList<String> itemList;
     ListView<String> listView = new ListView<>();
     private static HashMap<Integer, String> levelmaps = new HashMap<>();
@@ -123,7 +127,7 @@ public class Main extends Application {
         dbManager.setup();
         setupMapTxt("map.txt");
         canvasSetup();
-        createPlayer();
+        createPlayer(startingX,startingY,"Mariusz");
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -132,7 +136,8 @@ public class Main extends Application {
 
         addPickupButton(ui);
         exportBtn.addExportButton(ui, map.getPlayer());
-        importBtn.addImportButton(ui);
+        importClass.addImportButton(ui);
+        importSaveFromJson(primaryStage);
 
         BorderPane borderPane = new BorderPane();
 
@@ -150,15 +155,32 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void importSaveFromJson(Stage primaryStage) {
+        Button importBtn = importClass.getImportButton();
+        importBtn.setOnAction(event -> {
+            File selectedFilePath = importClass.selectFilePath();
+            List gameData = importClass.importDataFromJson(selectedFilePath.getPath());
+            Long x = (Long) gameData.get(1);
+            Long y = (Long) gameData.get(2);
+            startingX = x.intValue();
+            startingY = y.intValue();
+            try {
+                startGame(primaryStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     private void setupMapTxt(String filename) {
         this.filename = filename;
         is = MapLoader.class.getResourceAsStream("/" + filename);
         map = new MapLoader().loadMap(is);
     }
 
-    private void createPlayer() {
-        Cell playerCell = new Cell(map, 18,18,CellType.FLOOR);
-        map.setPlayer(new Player(1,playerCell, 50, "Mariusz"));
+    private void createPlayer(int x, int y, String name) {
+        Cell playerCell = new Cell(map, x,y,CellType.FLOOR);
+        map.setPlayer(new Player(1,playerCell, 50, name));
         refresh();
     }
 

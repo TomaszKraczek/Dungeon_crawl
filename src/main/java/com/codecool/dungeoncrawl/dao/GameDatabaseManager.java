@@ -40,12 +40,12 @@ public class GameDatabaseManager {
         return dataSource;
     }
 
-    public void saveGame(String saveName, GameMap map) {
+    public void saveGame(String saveName, GameMap map, String filename) {
          PlayerModel model = new PlayerModel(map.getPlayer());
          int playerId = playerDao.add(model);
 
          //TODO jak wybierać planszę
-         GameState gameState = new GameState("1", model, playerId);
+         GameState gameState = new GameState(filename, model, playerId);
          gameStateDao.add(gameState, saveName);
          System.out.println(gameState.toString());
 

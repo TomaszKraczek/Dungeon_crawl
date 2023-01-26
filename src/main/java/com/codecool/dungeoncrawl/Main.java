@@ -39,7 +39,7 @@ import java.sql.SQLException;
 
 
 public class Main extends Application {
-    String filename = levelmaps.get(1);
+    String filename;
     InputStream is;
     GameMap map;
     Canvas canvas;
@@ -151,13 +151,14 @@ public class Main extends Application {
     }
 
     private void setupMapTxt(String filename) {
+        this.filename = filename;
         is = MapLoader.class.getResourceAsStream("/" + filename);
         map = new MapLoader().loadMap(is);
     }
 
     private void createPlayer() {
         Cell playerCell = new Cell(map, 18,18,CellType.FLOOR);
-        map.setPlayer(new Player(1,playerCell, 50, "Tomasz"));
+        map.setPlayer(new Player(1,playerCell, 50, "Mariusz"));
         refresh();
     }
 
@@ -352,7 +353,7 @@ public class Main extends Application {
 
         if (saveGame.match(keyEvent)) {
             String saveName = getSaveNameFromWindow();
-            dbManager.saveGame(saveName, map);
+            dbManager.saveGame(saveName, map, filename);
         }
     }
 

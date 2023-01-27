@@ -42,15 +42,14 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveIntoAnotherActor() {
+    void canMoveIntoAnotherActor() {
         Player player = new Player(0, gameMap.getCell(1, 1), PlayerDefaultStats.HEALTH.getDefaultValue(), "Mariusz");
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1), MonstersStats.SKELETON.getHealthPoints(), MonstersStats.SKELETON.getAttackStrength());
+        player.updatePlayerStats();
         player.move(1, 0);
 
-        assertEquals(1, player.getX());
+        assertEquals(2, player.getX());
         assertEquals(1, player.getY());
-        assertEquals(2, skeleton.getX());
-        assertEquals(1, skeleton.getY());
-        assertEquals(skeleton, gameMap.getCell(2, 1).getActor());
+        assertEquals(player, gameMap.getCell(2, 1).getActor());
     }
 }
